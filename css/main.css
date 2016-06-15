@@ -7,37 +7,50 @@ body {
   margin: 0;
   padding: 0;
 }
-@media (max-width: 45) {
-  .content {
-    width: 700px;
-  }
+.content {
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  height: 98%;
+  width: 90%;
 }
-@media (min-width: 45) and (max-width: 45) {
+@media (max-width: 768px) {
   .content {
-    width: 700px;
-  }
-}
-@media (min-width: 45) and (max-width: 45) {
-  .content {
-    width: 700px;
-  }
-}
-@media (min-width: 45) {
-  .content {
-    width: 700px;
+    width: 100%;
+    height: 100%;
   }
 }
 .content .contacts {
-  width: 300px;
+  width: 20%;
+  height: 100%;
+  float: left;
+  position: relative;
+  background: #fddf96;
+}
+.content .contacts ul {
+  margin: 0;
 }
 .content .chat {
-  width: 700px;
+  float: left;
+  position: relative;
+  width: 80%;
+  height: 100%;
 }
 .content .chat .chat-info {
-  width: 700px;
+  width: 100%;
+  height: 100px;
+  background: #fccc56;
+}
+.content .chat .chat-info ul {
+  margin: 0;
 }
 .content .chat .chat-talk {
-  width: 700px;
+  width: 100%;
+  background: #fde5ab;
+}
+.content .chat .chat-talk ul {
+  margin: 0;
 }
 .content .chat .chat-talk ul li.contact {
   text-align: left;
@@ -52,5 +65,15 @@ body {
   font-size: 16px;
 }
 .content .chat .text-area {
-  width: 700px;
+  width: 100%;
+  height: 100px;
+  background: #fdd981;
+}
+.content .chat .text-area textarea {
+  width: 90%;
+  height: 100%;
+}
+.content .chat .text-area a span {
+  height: 30px;
+  width: 9%;
 }
