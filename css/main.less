@@ -13,36 +13,52 @@
 body{
 	margin: 0;
 	padding: 0; 
-	
-	.content{
-		@media (max-width: @screen-xs) {
-			
-		}
-		@media (min-width: @screen-xs) and (max-width: @screen-sm) {
-			
-		}
-		@media (min-width: @screen-sm) and (max-width: @screen-md) { 
-			
-		}
-		@media (min-width: @screen-lg) {
-			
-		}
-		
-		.contacts{ 
-			
-		}
+}
 
-		.chat{
-			
-			.chat-info{
-				
+.content{
+	@media (max-width: @screen-xs) {
+		width: 700px;
+	}
+	@media (min-width: @screen-xs) and (max-width: @screen-sm) {
+		width: 700px;
+	}
+	@media (min-width: @screen-sm) and (max-width: @screen-md) { 
+		width: 700px;
+	}
+	@media (min-width: @screen-lg) {
+		width: 700px;
+	}
+	
+	.contacts{ 
+		width: 300px;
+	}
+
+	.chat{
+		width: 700px;
+		.chat-info{
+			width: 700px;
+		}
+		.chat-talk{
+			width: 700px;
+			ul{
+				li{
+					&.contact{
+						text-align: left;
+					}
+					&.user{
+						text-align: right;
+					}
+					span:first-child{
+						font-size: 14px;
+					}
+					span:last-child{
+						font-size: 16px;
+					}
+				}
 			}
-			.chat-talk{
-						
-			}
-			.text-area{
-						
-			}
+		}
+		.text-area{
+			width: 700px;
 		}
 	}
 }

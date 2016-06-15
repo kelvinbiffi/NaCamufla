@@ -7,3 +7,50 @@ body {
   margin: 0;
   padding: 0;
 }
+@media (max-width: 45) {
+  .content {
+    width: 700px;
+  }
+}
+@media (min-width: 45) and (max-width: 45) {
+  .content {
+    width: 700px;
+  }
+}
+@media (min-width: 45) and (max-width: 45) {
+  .content {
+    width: 700px;
+  }
+}
+@media (min-width: 45) {
+  .content {
+    width: 700px;
+  }
+}
+.content .contacts {
+  width: 300px;
+}
+.content .chat {
+  width: 700px;
+}
+.content .chat .chat-info {
+  width: 700px;
+}
+.content .chat .chat-talk {
+  width: 700px;
+}
+.content .chat .chat-talk ul li.contact {
+  text-align: left;
+}
+.content .chat .chat-talk ul li.user {
+  text-align: right;
+}
+.content .chat .chat-talk ul li span:first-child {
+  font-size: 14px;
+}
+.content .chat .chat-talk ul li span:last-child {
+  font-size: 16px;
+}
+.content .chat .text-area {
+  width: 700px;
+}

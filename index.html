@@ -25,27 +25,33 @@
 			</div>
 			
 			<!-- chat section -->
-			<div class="chat">
+			<div class="chat" ng-controller="chatCtrl">
 				<!-- Info chat section -->
 				<div class="chat-info">
 					<div class="profile-img"></div>
 					<span class="name"></span>
 					<ul>
-						<li></li>
+						<li ng-repeat="x in chatInfo">
+							<span>{{x.code}}</span>
+							<span>{{x.users}}</span>
+						</li>
 					</ul>
 				</div>
 				
 				<!-- Info chat section -->
 				<div class="chat-talk">
 					<ul>
-						<li></li>
+						<li ng-repeat="x in chatTalk" class="{{x.type}}">
+							<span>{{x.name}}</span><br>
+							<span>{{x.text}}</span>
+						</li>
 					</ul>
 				</div>
 				
 				<!-- textarea section -->
 				<div class="text-area">
 					<textarea name="name" rows="8" cols="40"></textarea>
-					<input type="button" >
+					<button>Send</button>
 				</div>
 			</div>
 			
