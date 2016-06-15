@@ -1,5 +1,5 @@
 //Initialize application
-var app = angular.module("chater", []);
+var app = angular.module("Chatter", []);
 
 //Service to send info about user cross controlers
 app.service('userService', function() {
