@@ -42,8 +42,11 @@
 				<div class="chat-talk">
 					<ul>
 						<li ng-repeat="x in chatTalk" class="{{x.type}}">
-							<span>{{x.name}}</span><br>
-							<span>{{x.text}}</span>
+							<span>
+								<span>{{ (x.code !== chatTalk[$index-1].code ? x.name : "") }}</span>
+								<br ng-if="x.code !== chatTalk[$index-1].code">
+								{{x.text}}
+							</span>
 						</li>
 					</ul>
 				</div>

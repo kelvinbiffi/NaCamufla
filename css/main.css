@@ -13,12 +13,22 @@ body {
   left: 0;
   right: 0;
   height: 98%;
-  width: 90%;
+  background: #fde5ab;
 }
 @media (max-width: 768px) {
   .content {
     width: 100%;
     height: 100%;
+  }
+}
+@media (min-width: 769px) and (max-width: 992px) {
+  .content {
+    width: 739px;
+  }
+}
+@media (min-width: 993px) {
+  .content {
+    width: 963px;
   }
 }
 .content .contacts {
@@ -51,23 +61,37 @@ body {
 }
 .content .chat .chat-talk ul {
   margin: 0;
+  padding-left: 50px;
+  padding-right: 50px;
+  list-style-type: none;
 }
 .content .chat .chat-talk ul li.contact {
   text-align: left;
 }
+.content .chat .chat-talk ul li.contact span {
+  background: #FFFFFF;
+}
 .content .chat .chat-talk ul li.user {
   text-align: right;
 }
-.content .chat .chat-talk ul li span:first-child {
-  font-size: 14px;
+.content .chat .chat-talk ul li.user span {
+  background: #fddf96;
 }
-.content .chat .chat-talk ul li span:last-child {
+.content .chat .chat-talk ul li span {
+  border-radius: 3px;
+  padding: 2px;
+  width: auto;
   font-size: 16px;
+}
+.content .chat .chat-talk ul li span span {
+  font-size: 14px;
 }
 .content .chat .text-area {
   width: 100%;
   height: 100px;
   background: #fdd981;
+  position: absolute;
+  bottom: 0;
 }
 .content .chat .text-area textarea {
   width: 90%;
