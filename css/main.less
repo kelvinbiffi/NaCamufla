@@ -1,27 +1,43 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,600");
 @import url("font-awesome.min.css");
 
+//mixins
 .calcWidth(@base, @lint) {
   @width: @base - @lint;
 	width: @width;
 }
 
-@xs-min: (@xs-max + 1);
-@xs-max: 480px;
-@sm-min: (@xs-max + 1);
-@sm-max: 768px;
-@md-min: (@sm-max + 1);
-@md-max: 992px;
-@lg-min: (@md-max + 1);
-@lg-max: 1200px;
+.rgbaColorIn(@color, @opacity : 1){
+  @result: rgba( red(@color), green(@color), blue(@color), @opacity );
+}
 
-@contact-bg-color: #fddf96;
-@chat-info-bg-color: #fccc56;
-@chat-talk-bg-color: #fde5ab;
+//Screen breakpoints variables
+@xs-max: (@sm-min - 1);
+@sm-min: 768px;
+@sm-max: (@md-min - 1);
+@md-min: 992px;
+@md-max: (@lg-min - 1);
+@lg-min: 1200px;
+
+//contacts variables
+@contact-bg-color: #dfdfd9;
+
+//chat info variables
+@chat-info-bg-color: @contact-bg-color;
+
+//chat talk variables
+@chat-talk-bg-color: #F2F2F2;
+@padding-chat-talk: 30px;
+
+@chat-contact-bg-color: #999999;
+@chat-user-bg-color: #b0e0e6;
+
+//Text area variables
 @text-area-bg-color: #fdd981;
 
-@chat-contact-bg-color: #FFFFFF;
-@chat-user-bg-color: #fddf96;
+//general variables
+@body-bg-color: #f8f8f2;
+
 
 *{
 	font-family: 'Source Sans Pro';   
@@ -29,7 +45,8 @@
 
 body{
 	margin: 0;
-	padding: 0; 
+	padding: 0;
+  background: @body-bg-color;
 }
 
 .content{
@@ -72,40 +89,65 @@ body{
 			width: 100%;
 			height: 100px;
 			background: @chat-info-bg-color;
+      border-left: 1px solid darken(@chat-info-bg-color, 7%);
+      border-bottom: 1px solid darken(@chat-info-bg-color, 7%);
 			ul{
 				margin: 0;
 			}
 		}
 		.chat-talk{
+      overflow-y: scroll;
 			width: 100%;
 			background: @chat-talk-bg-color;
 			ul{
 				margin: 0;
-        padding-left: 50px;
-        padding-right: 50px;
+        padding-left: @padding-chat-talk;
+        padding-right: @padding-chat-talk;
         list-style-type: none;
 				li{
+          .chat-talk-info{
+            position: relative;
+            display: inline-block;
+            border-radius: 5px;
+            padding: 2px;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin: 4px;
+            max-width: 60%;
+            .chat-user-name{
+              font-size: 13px;
+            }
+            .chat-user-text{
+              font-size: 15px;
+            }
+            .last-message{
+              font-size: 19px;
+              position: absolute;
+              bottom: 0;
+              &.user{
+                right: 0;
+                margin-right: -5px;
+                color: @chat-user-bg-color;
+              }
+              &.contact{
+                left: 0;
+                margin-left: -5px;
+                color: @chat-contact-bg-color;
+              }
+            }
+          }
 					&.contact{
 						text-align: left;
-            span{
+            .chat-talk-info{
               background: @chat-contact-bg-color;
             }
 					}
 					&.user{
 						text-align: right;
-            span{
+            .chat-talk-info{
               background: @chat-user-bg-color;
             }
 					}
-          span{
-            border-radius: 3px;
-            padding: 2px;
-            width: auto;
-            font-size: 16px;
-            span{
-  						font-size: 14px;
-  					}
-          }
 				}
 			}
 		}
