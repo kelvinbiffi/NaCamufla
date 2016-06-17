@@ -47,18 +47,21 @@ body{
 	margin: 0;
 	padding: 0;
   background: @body-bg-color;
+  overflow: hidden;
 }
 
 .content{
 	position: absolute;
 	margin: auto;
 	left: 0; right: 0;
-	height: 98%;
+	height: 96%;
+  margin-top: 7px;
   background: @chat-talk-bg-color;
 	
   @media (max-width: @sm-max) {
 		width: 100%;
 		height: 100%;
+    margin: 0;
 	}
   
   @media (min-width: @md-min) and (max-width: @md-max) {
