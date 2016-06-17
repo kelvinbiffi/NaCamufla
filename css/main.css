@@ -6,7 +6,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: #f8f8f2;
+  background: #e4e1d7;
 }
 .content {
   position: absolute;
@@ -99,13 +99,13 @@ body {
 .content .chat .chat-talk ul li .chat-talk-info .last-message.contact {
   left: 0;
   margin-left: -5px;
-  color: #999999;
+  color: #c6c6c1;
 }
 .content .chat .chat-talk ul li.contact {
   text-align: left;
 }
 .content .chat .chat-talk ul li.contact .chat-talk-info {
-  background: #999999;
+  background: #c6c6c1;
 }
 .content .chat .chat-talk ul li.user {
   text-align: right;
@@ -119,6 +119,7 @@ body {
   background: #efefec;
   position: absolute;
   bottom: 0;
+  border-top: 1px solid #dfdfd9;
 }
 .content .chat .text-area div {
   height: 100px;

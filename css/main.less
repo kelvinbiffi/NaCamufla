@@ -29,14 +29,14 @@
 @chat-talk-bg-color: #F2F2F2;
 @padding-chat-talk: 30px;
 
-@chat-contact-bg-color: #999999;
+@chat-contact-bg-color: #c6c6c1;
 @chat-user-bg-color: #b0e0e6;
 
 //Text area variables
 @text-area-bg-color: @contact-bg-color;
 
 //general variables
-@body-bg-color: #f8f8f2;
+@body-bg-color: lighten(#c7c1ad,14%);
 
 
 *{
@@ -158,7 +158,7 @@ body{
 			background: @text-area-bg-color;
       position: absolute;
       bottom: 0;
-      
+      border-top: 1px solid darken(@chat-info-bg-color, 7%);
       div{
         height: 100px;
       }
