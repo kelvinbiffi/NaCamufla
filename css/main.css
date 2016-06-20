@@ -17,6 +17,9 @@ body {
   height: 96%;
   margin-top: 7px;
   background: #F2F2F2;
+  -webkit-box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.2);
 }
 @media (max-width: 991px) {
   .content {
@@ -36,7 +39,7 @@ body {
   }
 }
 .content .contacts {
-  width: 20%;
+  width: 25%;
   height: 100%;
   float: left;
   position: relative;
@@ -46,11 +49,45 @@ body {
 }
 .content .contacts ul {
   margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.content .contacts ul li {
+  position: relative;
+  padding: 5px;
+}
+.content .contacts ul li.user {
+  height: 90px;
+  border-bottom: 1px solid #dfdfd9;
+}
+.content .contacts ul li.contact {
+  min-height: 70px;
+  border-bottom: 1px solid #dfdfd9;
+}
+.content .contacts ul li.contact:hover {
+  cursor: pointer;
+  background: #e8e8e4;
+}
+.content .contacts ul li.contact:last-child {
+  border: 0;
+}
+.content .contacts ul li .code {
+  display: none;
+}
+.content .contacts ul li .name {
+  font-size: 16px;
+}
+.content .contacts ul li .user {
+  font-size: 12px;
+}
+.content .contacts ul li .info {
+  font-size: 14px;
+  font-style: italic;
 }
 .content .chat {
   float: left;
   position: relative;
-  width: 80%;
+  width: 75%;
   height: 100%;
 }
 .content .chat .chat-info {
@@ -61,6 +98,23 @@ body {
 }
 .content .chat .chat-info ul {
   margin: 0;
+  list-style-type: none;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.content .chat .chat-info ul li .code {
+  display: none;
+}
+.content .chat .chat-info ul li .name {
+  font-size: 20px;
+}
+.content .chat .chat-info ul li .user {
+  font-size: 14px;
+  font-style: italic;
+}
+.content .chat .chat-info ul li .info {
+  font-size: 16px;
+  font-style: italic;
 }
 .content .chat .chat-talk {
   overflow-y: scroll;
@@ -76,6 +130,8 @@ body {
 .content .chat .chat-talk ul li .chat-talk-info {
   position: relative;
   display: inline-block;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
   border-radius: 5px;
   padding: 2px;
   padding-left: 10px;
@@ -143,6 +199,8 @@ body {
   max-width: 94%;
   max-height: 34px;
   border: none;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
   border-radius: 25px;
   position: absolute;
   padding: 15px;
@@ -161,6 +219,8 @@ body {
 }
 .content .chat .text-area .button span {
   border: 1px solid #c1c1b5;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
   border-radius: 10px;
   position: absolute;
   margin: auto;

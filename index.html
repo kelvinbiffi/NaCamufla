@@ -15,11 +15,17 @@
 			<!-- Contact section -->
 			<div class="contacts" ng-controller="contactsCtrl">
 				<ul>
-					<li ng-repeat="x in contacts">
-						<span>{{x.code}}</span><br>
-						<span>{{x.user}}</span><br>
-						<span>{{x.name}}</span><br>
-						<span>{{x.info}}</span><br>
+					<li ng-repeat="x in user" class="user">
+						<span class="code">{{x.code}}</span>
+						<span class="name">{{x.name}}</span><br>
+						<span class="user">{{x.user}}</span><br>
+						<span class="info">{{x.info}}</span><br>
+					</li>
+					<li ng-repeat="x in contacts" class="contact">
+						<span class="code">{{x.code}}</span>
+						<span class="name">{{x.name}}</span><br>
+						<span class="user">{{x.user}}</span><br>
+						<span class="info">{{x.info}}</span><br>
 					</li>
 				</ul>
 			</div>
@@ -32,8 +38,10 @@
 					<span class="name"></span>
 					<ul>
 						<li ng-repeat="x in chatInfo">
-							<span>{{x.code}}</span>
-							<span>{{x.users}}</span>
+							<span class="code">{{x.code}}</span>
+							<span class="name">{{x.name}}</span>
+							<span class="user">{{x.user}}</span><br>
+							<span class="info">{{x.info}}</span>
 						</li>
 					</ul>
 				</div>

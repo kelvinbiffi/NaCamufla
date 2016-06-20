@@ -60,6 +60,7 @@ app.controller("contactsCtrl", function($scope, userService, contactService, cha
     {code: "8yg7", user : "leonelobiffi", name : "Leonelo Biffi", info : "Blue sky"},
     {code: "45y4hh", user : "angelastoll", name : "Angela Stoll", info : "Red dress"},
     {code: "45h45", user : "kellenleote", name : "Kellen Leote", info : "Brown eyes"},
+    {code: "46j4y4j654", user : "kellenleote, angelastoll, fabiobueno, costinha234", name : "Zueira TI", info : "Zueira never ends"},
   ];
   
   //send information to the services
@@ -75,7 +76,7 @@ app.controller("chatCtrl", function($scope, userService, contactService, chatSer
   $scope.contacts = contactService.getContacts();
   
   $scope.chatInfo = [
-    {code: "8yg7", users : "kelvinbiffi",}
+    {code: "46j4y4j654", user : "kellenleote, angelastoll, fabiobueno, costinha234", name : "Zueira TI", info : "Zueira never ends"},
   ];
   
   $scope.chatTalk = [
