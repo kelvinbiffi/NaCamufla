@@ -51,9 +51,9 @@
 					<ul>
 						<li ng-repeat="x in chatTalk" class="{{x.type}}">
 							<div class="chat-talk-info">
-								<span class="chat-user-name">{{ (x.code !== chatTalk[$index-1].code ? x.name : "") }}</span>
+								<span class="chat-user-name" alt="{{ x.code }}">{{ (x.code !== chatTalk[$index-1].code ? x.name : "") }}</span>
 								<br ng-if="x.code !== chatTalk[$index-1].code">
-								<span class="chat-user-text">{{x.text}}</span>
+								<span class="chat-user-text">{{ x.text }}</span>
 								<span class="fa fa-caret-{{ (x.type == 'user' ? 'right' : 'left') }} last-message {{x.type}}" ng-if="x.code !== chatTalk[$index+1].code"></span>
 							</div>
 						</li>
@@ -66,10 +66,10 @@
 						
 					</div>
 					<div class="field">
-						<textarea name="name"  placeholder="Type a message"></textarea>
+						<textarea name="name"  placeholder="Type a message" ng-model="textArea"></textarea>
 					</div>
 					<div class="button">
-						<span class="fa fa-paper-plane"></span>
+						<span class="fa fa-paper-plane" ng-click="sendMessage()"></span>
 					</div>
 				</div>
 			</div>

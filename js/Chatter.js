@@ -101,4 +101,19 @@ app.controller("chatCtrl", function($scope, userService, contactService, chatSer
   
   $scope.textArea = "";
   
+  $scope.newMessage = function(){
+    var self = this;
+    self.code = $scope.user[0].code;
+    self.name = $scope.user[0].name;
+    self.text = $scope.textArea.replace(/\r?\n/g, '<br>');
+    self.type = "user";
+  };
+  
+  $scope.sendMessage = function() {
+    console.log($scope.user, $scope.textArea,'textArea');
+    $scope.chatTalk.push(new $scope.newMessage());
+    
+    $scope.textArea = "";
+  };
+  
 });
