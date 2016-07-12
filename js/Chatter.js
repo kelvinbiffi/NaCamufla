@@ -51,11 +51,12 @@ app.service('chatService', function() {
 
 //contacts API Controller
 app.controller("contactsCtrl", function($scope, userService, contactService, chatService) {
-  //Array user information
+  
+  //Array user information must be loaded from web service
   $scope.user = [
     {code: "4g4gsgb", user : "kelvinbiffi", name : "Kelvin Biffi", info : "Only nature is secret"},
   ];
-  //Arrar avaliable contacts information
+  //Arrar avaliable contacts must be loaded from web service
   $scope.contacts = [
     {code: "8yg7", user : "leonelobiffi", name : "Leonelo Biffi", info : "Blue sky"},
     {code: "45y4hh", user : "angelastoll", name : "Angela Stoll", info : "Red dress"},
@@ -75,10 +76,12 @@ app.controller("chatCtrl", function($scope, userService, contactService, chatSer
   $scope.user = userService.getUser();
   $scope.contacts = contactService.getContacts();
   
+  //must be loaded from contacts scope set above
   $scope.chatInfo = [
     {code: "46j4y4j654", user : "kellenleote, angelastoll, fabiobueno, costinha234", name : "Zueira TI", info : "Zueira never ends"},
   ];
   
+  //must be loaded from web service
   $scope.chatTalk = [
     {code: "8yg7", name : "Leonelo Biffi", text: "Hy", type: "contact"},
     {code: "8yg7", name : "Leonelo Biffi", text: "How r u?", type: "contact"},

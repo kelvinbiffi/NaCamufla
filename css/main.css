@@ -127,6 +127,9 @@ body {
   padding-right: 30px;
   list-style-type: none;
 }
+.content .chat .chat-talk ul li:last-child {
+  margin-bottom: 20px;
+}
 .content .chat .chat-talk ul li .chat-talk-info {
   position: relative;
   display: inline-block;
