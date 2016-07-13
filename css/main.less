@@ -41,8 +41,11 @@
 @chat-talk-bg-color: #F2F2F2;
 @padding-chat-talk: 30px;
 
-@chat-contact-bg-color: #c6c6c1;
+@chat-contact-bg-color: lighten(#c6c6c1,7%);
 @chat-user-bg-color: #b0e0e6;
+
+@color-link: lighten(#00F,10%);
+@color-image-border: lighten(#000000,7%);
 
 //Text area variables
 @text-area-bg-color: @contact-bg-color;
@@ -181,6 +184,9 @@ body{
           .chat-talk-info{
             position: relative;
             display: inline-block;
+            a{
+              color: @color-link;
+            }
             .borderRadius(5px);
             padding: 2px;
             padding-left: 10px;
@@ -193,6 +199,11 @@ body{
             }
             .chat-user-text{
               font-size: 15px;
+            }
+            .image{
+              max-width: 100%;
+              border-left: 3px @color-image-border solid;
+              padding-left: 3px;
             }
             .last-message{
               font-size: 19px;
@@ -220,6 +231,7 @@ body{
 						text-align: right;
             .chat-talk-info{
               background: @chat-user-bg-color;
+              text-align: left;
             }
 					}
 				}

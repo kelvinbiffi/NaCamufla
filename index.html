@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Chatter">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Chatter</title>
@@ -7,10 +7,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="css/main.css">
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
-		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<script src="js/angular.min.js"></script>
+		<script data-require="angular-sanitize@*" data-semver="1.2.5" src="js/angular-sanitize.js"></script>
 		<script src="js/Chatter.js" type="text/javascript"></script>
 	</head>
-	<body ng-app="Chatter">
+	<body>
 		<div class="content">
 			<!-- Contact section -->
 			<div class="contacts" ng-controller="contactsCtrl">
@@ -53,7 +54,7 @@
 							<div class="chat-talk-info">
 								<span class="chat-user-name" alt="{{ x.code }}">{{ (x.code !== chatTalk[$index-1].code ? x.name : "") }}</span>
 								<br ng-if="x.code !== chatTalk[$index-1].code">
-								<span class="chat-user-text">{{ x.text }}</span>
+								<span class="chat-user-text" ng-bind-html="textService.urlify(x.text)"></span>
 								<span class="fa fa-caret-{{ (x.type == 'user' ? 'right' : 'left') }} last-message {{x.type}}" ng-if="x.code !== chatTalk[$index+1].code"></span>
 							</div>
 						</li>
@@ -66,7 +67,7 @@
 						
 					</div>
 					<div class="field">
-						<textarea name="name"  placeholder="Type a message" ng-model="textArea"></textarea>
+						<textarea name="name" ng-keyup="keyEnter($event)" placeholder="Type a message" ng-model="textArea"></textarea>
 					</div>
 					<div class="button">
 						<span class="fa fa-paper-plane" ng-click="sendMessage()"></span>

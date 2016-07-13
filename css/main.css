@@ -142,12 +142,20 @@ body {
   margin: 4px;
   max-width: 60%;
 }
+.content .chat .chat-talk ul li .chat-talk-info a {
+  color: #3333ff;
+}
 .content .chat .chat-talk ul li .chat-talk-info .chat-user-name {
   font-size: 13px;
   font-weight: 900;
 }
 .content .chat .chat-talk ul li .chat-talk-info .chat-user-text {
   font-size: 15px;
+}
+.content .chat .chat-talk ul li .chat-talk-info .image {
+  max-width: 100%;
+  border-left: 3px #121212 solid;
+  padding-left: 3px;
 }
 .content .chat .chat-talk ul li .chat-talk-info .last-message {
   font-size: 19px;
@@ -162,19 +170,20 @@ body {
 .content .chat .chat-talk ul li .chat-talk-info .last-message.contact {
   left: 0;
   margin-left: -5px;
-  color: #c6c6c1;
+  color: #d7d7d4;
 }
 .content .chat .chat-talk ul li.contact {
   text-align: left;
 }
 .content .chat .chat-talk ul li.contact .chat-talk-info {
-  background: #c6c6c1;
+  background: #d7d7d4;
 }
 .content .chat .chat-talk ul li.user {
   text-align: right;
 }
 .content .chat .chat-talk ul li.user .chat-talk-info {
   background: #b0e0e6;
+  text-align: left;
 }
 .content .chat .text-area {
   width: 100%;

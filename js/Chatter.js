@@ -1,5 +1,7 @@
 //Initialize application
-var app = angular.module("Chatter", []);
+var app = angular.module("Chatter", [
+    'ngSanitize' //Working with "ng-bind-html" to show html tags on interface
+]);
 
 //Service to send info about user cross controlers
 app.service('userService', function() {
@@ -49,6 +51,39 @@ app.service('chatService', function() {
   };
 });
 
+//Service to manipulate text sent or read
+app.service('textService',function(){
+  
+  //***have to add video crawler***
+  
+  var returnLink = function(link){
+    console.log(link);
+    var label = link.substr(0,10) + "..." + link.substr(link.length-5,5);
+    return '<a href="' + link + '" target="_blank">' + label + '...</a>';
+  };
+  
+  var imaged = function(text){
+    var urlRegex = /(http[s]?:\/\/[^\s]+)*(jpg|png|gif)/g;
+    return text.replace(urlRegex, function(url) {
+      return returnLink(url) + '<br><img class="image" src="' + url + '" />';
+    });
+  };
+  
+  //manipulate http urls sent
+  var urlify = function(text) {
+      text = text.replace("<", '&lt;').replace(">", '&gt;').replace(/\r?\n/g, '<br>');
+      text = imaged(text);
+      var urlRegex = /(http[s]?:\/\/[^\s](?![^" ]*(?:jpg|png|gif))[^" ]+)/g;
+      return text.replace(urlRegex, function(url) {
+          return returnLink(url);
+      });
+  };
+  
+  return {
+    urlify: urlify
+  };
+});
+
 //contacts API Controller
 app.controller("contactsCtrl", function($scope, userService, contactService, chatService) {
   
@@ -70,11 +105,13 @@ app.controller("contactsCtrl", function($scope, userService, contactService, cha
 });
 
 //chat API controller
-app.controller("chatCtrl", function($scope, userService, contactService, chatService) {
+app.controller("chatCtrl", function($scope, userService, contactService, chatService, textService) {
   
   //Get information from services
   $scope.user = userService.getUser();
   $scope.contacts = contactService.getContacts();
+  $scope.textService = textService;
+  $scope.oldScrollHeight = $('#chat-talk ul').height();
   
   //must be loaded from contacts scope set above
   $scope.chatInfo = [
@@ -96,6 +133,8 @@ app.controller("chatCtrl", function($scope, userService, contactService, chatSer
     {code: "8yg7", name : "Leonelo Biffi", text: "No problem man, I send you pictures kkk, have a good work", type: "contact"},
     {code: "4g4gsgb", name : "Kelvin Biffi", text: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.", type: "user"},
     {code: "4g4gsgb", name : "Kelvin Biffi", text: "Thanks man!!", type: "user"},
+    {code: "8yg7", name : "Leonelo Biffi", text: "Thanks man!! https://media.giphy.com/media/xELN8T63yUJOM/giphy.gif", type: "contact"},
+    {code: "4g4gsgb", name : "Kelvin Biffi", text: "Noooooooooooo man!!", type: "user"},
     
   ];
   
@@ -105,15 +144,41 @@ app.controller("chatCtrl", function($scope, userService, contactService, chatSer
     var self = this;
     self.code = $scope.user[0].code;
     self.name = $scope.user[0].name;
-    self.text = $scope.textArea.replace(/\r?\n/g, '<br>');
+    self.text = $scope.textArea;
     self.type = "user";
   };
   
+  $scope.scrollDown = function(time){
+    console.log('controlScroll');
+    var n = $('#chat-talk').height() * 100;
+    $('#chat-talk').animate({ scrollTop: n }, time);
+  };
+  
+  $scope.keyEnter = function(event){
+    if(event.keyCode === 13 && event.ctrlKey === false){
+      $scope.sendMessage();
+    }else if(event.keyCode === 13){
+      $scope.textArea = $scope.textArea + "\r\n";
+    }
+  };
+  
   $scope.sendMessage = function() {
-    console.log($scope.user, $scope.textArea,'textArea');
     $scope.chatTalk.push(new $scope.newMessage());
+    
+    $scope.scrollDown(500);
+    var controlScrollDown = setTimeout(function(){
+      console.log('controlScrollTimeOut');
+      $scope.scrollDown(500);
+      clearTimeout(controlScrollDown);
+    },500);
     
     $scope.textArea = "";
   };
+  
+  var controlScrollDown = setTimeout(function(){
+    console.log('controlScrollTimeOut');
+    $scope.scrollDown(500);
+    clearTimeout(controlScrollDown);
+  },500);
   
 });
