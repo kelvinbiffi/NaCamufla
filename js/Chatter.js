@@ -51,15 +51,40 @@ app.service('chatService', function() {
   };
 });
 
+
 //Service to manipulate text sent or read
 app.service('textService',function(){
   
   //***have to add video crawler***
   
+  var changeHtmlConcern = function(text){
+    var regexBL = /\r?\n/g;
+    var regexArrows = /<|>/g;
+    text = text.replace(regexBL, function(match) {
+      return '<br>';
+    });
+    return text.replace(regexArrows, function(match) {
+      if(match === "<")return '&lt;';
+      if(match === ">")return '&gt;';
+    });
+  };
+  
+  var emoticons = function(text){
+    var urlRegex = /&lt;3|\(y\)/g;
+    return text.replace(urlRegex, function(emoticon) {
+      if(emoticon === "&lt;3" && text.trim() === emoticon)
+        return '<span title="'+emoticon+'" class="fa fa-heart big" aria-hidden="true"></span>';
+      if(emoticon === "&lt;3")
+        return '<span title="'+emoticon+'" class="fa fa-heart" aria-hidden="true"></span>';
+      if(emoticon === "(y)")
+        return '<span  title="'+emoticon+'" class="fa fa-thumbs-o-up" aria-hidden="true"></span>';
+      return emoticon;
+    });
+  };
+  
   var returnLink = function(link){
-    console.log(link);
     var label = link.substr(0,10) + "..." + link.substr(link.length-5,5);
-    return '<a href="' + link + '" target="_blank">' + label + '...</a>';
+    return '<a title="'+link+'" href="' + link + '" target="_blank">' + label + '...</a>';
   };
   
   var imaged = function(text){
@@ -71,8 +96,9 @@ app.service('textService',function(){
   
   //manipulate http urls sent
   var urlify = function(text) {
-      text = text.replace("<", '&lt;').replace(">", '&gt;').replace(/\r?\n/g, '<br>');
+      text = changeHtmlConcern(text);
       text = imaged(text);
+      text = emoticons(text);
       var urlRegex = /(http[s]?:\/\/[^\s](?![^" ]*(?:jpg|png|gif))[^" ]+)/g;
       return text.replace(urlRegex, function(url) {
           return returnLink(url);
@@ -163,16 +189,17 @@ app.controller("chatCtrl", function($scope, userService, contactService, chatSer
   };
   
   $scope.sendMessage = function() {
-    $scope.chatTalk.push(new $scope.newMessage());
-    
-    $scope.scrollDown(500);
-    var controlScrollDown = setTimeout(function(){
-      console.log('controlScrollTimeOut');
+    if($scope.textArea.trim() !== ""){
+      $scope.chatTalk.push(new $scope.newMessage());
+      
       $scope.scrollDown(500);
-      clearTimeout(controlScrollDown);
-    },500);
-    
-    $scope.textArea = "";
+      var controlScrollDown = setTimeout(function(){
+        console.log('controlScrollTimeOut');
+        $scope.scrollDown(500);
+        clearTimeout(controlScrollDown);
+      },500);
+      $scope.textArea = "";
+    }
   };
   
   var controlScrollDown = setTimeout(function(){

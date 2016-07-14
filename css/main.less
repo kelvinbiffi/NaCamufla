@@ -199,6 +199,28 @@ body{
             }
             .chat-user-text{
               font-size: 15px;
+              cursor: text;
+              white-space: pre-wrap;
+              overflow-wrap: break-word;
+              
+              .emoticon{
+                display: inline-block;
+                margin-left: 1px;
+                margin-right: 1px;
+              }
+              
+              .fa-heart{
+                .emoticon;
+                color: #E62F2F;
+                font-size: 18px;
+                &.big{
+                  font-size: 42px;
+                }
+              }
+              .fa-thumbs-o-up{
+                .emoticon;
+                font-size: 22px;
+              }
             }
             .image{
               max-width: 100%;
@@ -292,14 +314,13 @@ body{
           right: 0;
           cursor: pointer;
           &::before{
-            content: "\f1d8";
             position: absolute;
             margin: auto;
             height: 16px;
             width: 17px;
             top: 0;
             bottom: 0;
-            left: 0;
+            left: 8px;
             right: 0;
           }
 				}

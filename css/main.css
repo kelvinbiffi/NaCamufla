@@ -151,6 +151,30 @@ body {
 }
 .content .chat .chat-talk ul li .chat-talk-info .chat-user-text {
   font-size: 15px;
+  cursor: text;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+.content .chat .chat-talk ul li .chat-talk-info .chat-user-text .emoticon {
+  display: inline-block;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+.content .chat .chat-talk ul li .chat-talk-info .chat-user-text .fa-heart {
+  display: inline-block;
+  margin-left: 1px;
+  margin-right: 1px;
+  color: #E62F2F;
+  font-size: 18px;
+}
+.content .chat .chat-talk ul li .chat-talk-info .chat-user-text .fa-heart.big {
+  font-size: 42px;
+}
+.content .chat .chat-talk ul li .chat-talk-info .chat-user-text .fa-thumbs-o-up {
+  display: inline-block;
+  margin-left: 1px;
+  margin-right: 1px;
+  font-size: 22px;
 }
 .content .chat .chat-talk ul li .chat-talk-info .image {
   max-width: 100%;
@@ -245,13 +269,12 @@ body {
   cursor: pointer;
 }
 .content .chat .text-area .button span::before {
-  content: "\f1d8";
   position: absolute;
   margin: auto;
   height: 16px;
   width: 17px;
   top: 0;
   bottom: 0;
-  left: 0;
+  left: 8px;
   right: 0;
 }
