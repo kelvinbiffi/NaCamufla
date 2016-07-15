@@ -20,7 +20,7 @@ var configFTP = function(path){
 		host: 'ftp.xxx.xxx',
 		user: 'xxx',
 		pass: 'xxx',
-		remotePath: 'public_html/folder/' + path
+		remotePath: 'public_html/xxx/' + path
 	};
 };
 
