@@ -42,7 +42,7 @@ app.service('contactService', function() {
 /**
  * Service to send info about chats cross controlers
  */
-app.service('chatService', function(userService) {
+app.service('chatService', function($http, userService) {
   var chatTalk = [];
   var chatTalkInfo = {};
   
@@ -66,28 +66,31 @@ app.service('chatService', function(userService) {
     return chatTalkInfo;
   };
   
-  var getChatTalk = function(){
-    
+  var addMessage = function(obj){
+    chatTalk.push(obj);
   };
   
-  var loadChatTalk = function(callback){
+  var loadChatTalk = function(){
     var user = userService.getUser();
     console.log(user,'user');
-    var json = "http://kelvinbiffi.com/chatter/chat/" + chatTalkInfo.code + user[0].code + ".json";
+    var json = "./chat/" + chatTalkInfo.code + user[0].code + ".json";
     console.log(json);
-    $.ajaxSetup({
-  	  cache:false
-  	});
-    $.ajax({
-      type: "GET",
-      dataType: 'json',
-      url: json,
-      data: {},
-      success: function (data) {
-        callback(data);
-      },
-      error: function(data, status, headers, config) {
-          console.log("error",data, status, headers, config);
+    // Simple GET request example:
+    $http({
+      method: 'GET',
+      url: json
+    }).then(function successCallback(data) {
+      chatTalk = data.data;
+      //Slide down chat content
+      var controlScrollDown = setTimeout(function(){
+        console.log('controlScrollTimeOut');
+        scrollDown(1000);
+        clearTimeout(controlScrollDown);
+      },500);
+    }, function errorCallback(data, status, headers, config) {
+      console.log("error",data, status, headers, config);
+      if(data.status === 404 && data.statusText === "Not Found"){
+        chatTalk = [];
       }
     });
   };
@@ -98,6 +101,7 @@ app.service('chatService', function(userService) {
     setChatInfo: setChatInfo,
     getChatInfo: getChatInfo,
     scrollDown: scrollDown,
+    addMessage: addMessage,
     loadChatTalk: loadChatTalk
   };
 });
@@ -182,6 +186,7 @@ app.controller("contactsCtrl", function($scope, userService, contactService, cha
   ];
   
   $scope.loadChat = function(contactInfo){
+    // chatService.setChatTalk([]);//Clear chat content
     chatService.setChatInfo(contactInfo);
   };
   
@@ -215,22 +220,16 @@ app.controller("chatCtrl", function($scope, userService, contactService, chatSer
     //if a contact was selected
     if(!angular.equals({}, currentChatInfo)){
       //must be loaded from web service and must be add spinner
-      chatService.loadChatTalk(function(data){
-        chatService.setChatTalk(data);
-        console.log($scope.chatTalk);
-        //Slide down chat content
-        var controlScrollDown = setTimeout(function(){
-          console.log('controlScrollTimeOut');
-          chatService.scrollDown(500);
-          clearTimeout(controlScrollDown);
-        },500);
-      });
+      chatService.loadChatTalk();
+      var chat = chatService.getChatTalk();
+      console.log(chat,'chat');
     }
   }, true);
   
   $scope.$watch(function () {
     return chatService.getChatTalk();
   }, function(newChat, oldChat) {
+    console.log($scope.chatTalk, newChat, oldChat);
     $scope.chatTalk = newChat;
   }, true);
   
@@ -253,7 +252,7 @@ app.controller("chatCtrl", function($scope, userService, contactService, chatSer
   
   $scope.sendMessage = function() {
     if($scope.textArea.trim() !== ""){
-      $scope.chatTalk.push(new $scope.newMessage());
+      chatService.addMessage(new $scope.newMessage());
       
       chatService.scrollDown(500);
       var controlScrollDown = setTimeout(function(){
