@@ -31,24 +31,24 @@
 @md-max: (@lg-min - 1);
 @lg-min: 1200px;
 
-//contacts variables
-@contact-bg-color: lighten(#dfdfd9,7%);
+//rooms variables
+@room-bg-color: lighten(#dfdfd9,7%);
 
 //chat info variables
-@chat-info-bg-color: @contact-bg-color;
+@chat-info-bg-color: @room-bg-color;
 
 //chat talk variables
 @chat-talk-bg-color: #F2F2F2;
 @padding-chat-talk: 30px;
 
-@chat-contact-bg-color: lighten(#c6c6c1,7%);
+@chat-room-bg-color: lighten(#c6c6c1,7%);
 @chat-user-bg-color: #b0e0e6;
 
 @color-link: lighten(#00F,10%);
 @color-image-border: lighten(#000000,7%);
 
 //Text area variables
-@text-area-bg-color: @contact-bg-color;
+@text-area-bg-color: @room-bg-color;
 
 //general variables
 @body-bg-color: lighten(#c7c1ad,14%);
@@ -88,7 +88,7 @@ body{
 		.calcWidth(@lg-min, 30);
 	}
 	
-	.contacts{
+	.rooms{
     @media (max-width: @xs-max) {
   		display: none;
   	}
@@ -96,7 +96,7 @@ body{
 		height: 100%;
 		float: left;
 		position: relative;
-		background: @contact-bg-color;
+		background: @room-bg-color;
     border-right: 1px solid darken(@chat-info-bg-color, 7%);
     margin-left: -1px;
 		ul{
@@ -110,7 +110,7 @@ body{
           height: 90px;
           border-bottom: 1px solid darken(@chat-info-bg-color, 7%);
         }
-        &.contact{
+        &.room{
           cursor: pointer;
           min-height: 70px;
           &:hover{
@@ -243,17 +243,17 @@ body{
                 margin-right: -5px;
                 color: @chat-user-bg-color;
               }
-              &.contact{
+              &.room{
                 left: 0;
                 margin-left: -5px;
-                color: @chat-contact-bg-color;
+                color: @chat-room-bg-color;
               }
             }
           }
-					&.contact{
+					&.room{
 						text-align: left;
             .chat-talk-info{
-              background: @chat-contact-bg-color;
+              background: @chat-room-bg-color;
               text-align: left;
             }
 					}

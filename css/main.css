@@ -38,7 +38,7 @@ body {
     width: 1170px;
   }
 }
-.content .contacts {
+.content .rooms {
   width: 25%;
   height: 100%;
   float: left;
@@ -48,45 +48,45 @@ body {
   margin-left: -1px;
 }
 @media (max-width: 767px) {
-  .content .contacts {
+  .content .rooms {
     display: none;
   }
 }
-.content .contacts ul {
+.content .rooms ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-.content .contacts ul li {
+.content .rooms ul li {
   position: relative;
   padding: 5px;
 }
-.content .contacts ul li.user {
+.content .rooms ul li.user {
   height: 90px;
   border-bottom: 1px solid #dfdfd9;
 }
-.content .contacts ul li.contact {
+.content .rooms ul li.room {
   cursor: pointer;
   min-height: 70px;
   border-bottom: 1px solid #dfdfd9;
 }
-.content .contacts ul li.contact:hover {
+.content .rooms ul li.room:hover {
   cursor: pointer;
   background: #e8e8e4;
 }
-.content .contacts ul li.contact:last-child {
+.content .rooms ul li.room:last-child {
   border: 0;
 }
-.content .contacts ul li .code {
+.content .rooms ul li .code {
   display: none;
 }
-.content .contacts ul li .name {
+.content .rooms ul li .name {
   font-size: 16px;
 }
-.content .contacts ul li .user {
+.content .rooms ul li .user {
   font-size: 12px;
 }
-.content .contacts ul li .info {
+.content .rooms ul li .info {
   font-size: 14px;
   font-style: italic;
 }
@@ -202,15 +202,15 @@ body {
   margin-right: -5px;
   color: #b0e0e6;
 }
-.content .chat .chat-talk ul li .chat-talk-info .last-message.contact {
+.content .chat .chat-talk ul li .chat-talk-info .last-message.room {
   left: 0;
   margin-left: -5px;
   color: #d7d7d4;
 }
-.content .chat .chat-talk ul li.contact {
+.content .chat .chat-talk ul li.room {
   text-align: left;
 }
-.content .chat .chat-talk ul li.contact .chat-talk-info {
+.content .chat .chat-talk ul li.room .chat-talk-info {
   background: #d7d7d4;
   text-align: left;
 }

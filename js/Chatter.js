@@ -10,10 +10,10 @@ app.service('userService', function() {
   var user = [];
   
   var setUser = function(newObj) {
-      contactList = newObj;
+      roomList = newObj;
   };
   var getUser = function(){
-      return contactList;
+      return roomList;
   };
   return {
     setUser: setUser,
@@ -22,16 +22,16 @@ app.service('userService', function() {
 });
 
 /**
- * Service to send info about contacts cross controlers
+ * Service to send info about rooms cross controlers
  */
-app.service('contactService', function() {
-  var contactList = [];
+app.service('roomService', function() {
+  var roomList = [];
 
   var setContacts = function(newObj) {
-      contactList = newObj;
+      roomList = newObj;
   };
   var getContacts = function(){
-      return contactList;
+      return roomList;
   };
   return {
     setContacts: setContacts,
@@ -168,42 +168,42 @@ app.service('textService',function(){
 });
 
 /**
- * contacts API Controller
+ * rooms API Controller
  */
-app.controller("contactsCtrl", function($scope, userService, contactService, chatService) {
+app.controller("roomsCtrl", function($scope, userService, roomService, chatService) {
   
   //Array user information must be loaded from web service
   $scope.user = [
     {code: "4g4gsgb", user : "kelvinbiffi", name : "Kelvin Biffi", info : "Only nature is secret"},
   ];
   
-  //Arrar avaliable contacts must be loaded from web service
-  $scope.contacts = [
+  //Arrar avaliable rooms must be loaded from web service
+  $scope.rooms = [
     {code: "8yg7", user : "leonelobiffi", name : "Leonelo Biffi", info : "Blue sky"},
     {code: "45y4hh", user : "angelastoll", name : "Angela Stoll", info : "Red dress"},
     {code: "45h45", user : "kellenleote", name : "Kellen Leote", info : "Brown eyes"},
     {code: "46j4y4j654", user : "kellenleote, angelastoll, fabiobueno, costinha234", name : "Zueira TI", info : "Zueira never ends"},
   ];
   
-  $scope.loadChat = function(contactInfo){
+  $scope.loadChat = function(roomInfo){
     // chatService.setChatTalk([]);//Clear chat content
-    chatService.setChatInfo(contactInfo);
+    chatService.setChatInfo(roomInfo);
   };
   
   //send information to the services
   userService.setUser($scope.user);
-  contactService.setContacts($scope.contacts);
+  roomService.setContacts($scope.rooms);
 });
 
 
 /**
  * chat API controller
  */
-app.controller("chatCtrl", function($scope, userService, contactService, chatService, textService) {
+app.controller("chatCtrl", function($scope, userService, roomService, chatService, textService) {
   
   //Get information from services
   $scope.user = userService.getUser();
-  $scope.contacts = contactService.getContacts();
+  $scope.rooms = roomService.getContacts();
   $scope.textService = textService;
   
   //Variables
@@ -211,13 +211,13 @@ app.controller("chatCtrl", function($scope, userService, contactService, chatSer
   $scope.chatTalk = [];
   $scope.textArea = "";
   
-  //Watching chatInfo from contacts service set above
+  //Watching chatInfo from rooms service set above
   $scope.$watch(function () {
     return chatService.getChatInfo();
   }, function(currentChatInfo, oldChatInfo) {
     $scope.chatInfo = [currentChatInfo];
     
-    //if a contact was selected
+    //if a room was selected
     if(!angular.equals({}, currentChatInfo)){
       //must be loaded from web service and must be add spinner
       chatService.loadChatTalk();
