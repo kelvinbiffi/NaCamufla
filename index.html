@@ -22,7 +22,7 @@
 						<span class="user">{{x.user}}</span><br>
 						<span class="info">{{x.info}}</span><br>
 					</li>
-					<li ng-repeat="x in contacts" class="contact">
+					<li ng-repeat="x in contacts" class="contact" ng-click="loadChat(x)">
 						<span class="code">{{x.code}}</span>
 						<span class="name">{{x.name}}</span><br>
 						<span class="user">{{x.user}}</span><br>
@@ -74,6 +74,9 @@
 					</div>
 				</div>
 			</div>
+			<!--div id="chat" class="chat" ng-controller="chatCtrl">
+				
+			</div-->
 		</div>
 		
 		<script src="js/jquery-3.0.0.min.js" type="text/javascript"></script>
