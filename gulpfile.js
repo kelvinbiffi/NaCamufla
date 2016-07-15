@@ -16,6 +16,12 @@ var routes = {
 
 //FTP configuration
 var configFTP = function(path){
+	return {
+		host: 'ftp.xxx.xxx',
+		user: 'xxx',
+		pass: 'xxx',
+		remotePath: 'public_html/folder/' + path
+	};
 };
 
 //Clean CSS Files
