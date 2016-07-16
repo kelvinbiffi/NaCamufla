@@ -71,9 +71,7 @@ app.service('chatService', function($http, userService) {
   };
   
   var loadChatTalk = function(){
-    var user = userService.getUser();
-    console.log(user,'user');
-    var json = "./chat/" + chatTalkInfo.code + user[0].code + ".json";
+    var json = "./chat/" + chatTalkInfo.room + ".json";
     console.log(json);
     // Simple GET request example:
     $http({
@@ -177,12 +175,11 @@ app.controller("roomsCtrl", function($scope, userService, roomService, chatServi
     {code: "4g4gsgb", user : "kelvinbiffi", name : "Kelvin Biffi", info : "Only nature is secret"},
   ];
   
-  //Arrar avaliable rooms must be loaded from web service
+  //Arrar avaliable rooms must be loaded from web service getRooms
   $scope.rooms = [
-    {code: "8yg7", user : "leonelobiffi", name : "Leonelo Biffi", info : "Blue sky"},
-    {code: "45y4hh", user : "angelastoll", name : "Angela Stoll", info : "Red dress"},
-    {code: "45h45", user : "kellenleote", name : "Kellen Leote", info : "Brown eyes"},
-    {code: "46j4y4j654", user : "kellenleote, angelastoll, fabiobueno, costinha234", name : "Zueira TI", info : "Zueira never ends"},
+    {room: "8yg74g4gsgb", size : "4545"},
+    {room: "98t7fed80t7vd098y", size : "5657"},
+    {room: "sdvdvbdfb", size : "455"},
   ];
   
   $scope.loadChat = function(roomInfo){
