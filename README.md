@@ -1,7 +1,7 @@
 # Chatter - [VERSION](VERSION)
 
 ### Table of contents
-- [Chatter Widget](#chatter-widget)
+- [Chatter App](#chatter-app)
     - [Description](#description)
     - [Installation and Configuration](#installation-and-configuration)
     - [Development](#development)
