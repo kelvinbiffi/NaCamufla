@@ -74,6 +74,12 @@ body {
   cursor: pointer;
   background: #e8e8e4;
 }
+.content .rooms ul li.room.selected {
+  background: #dededc;
+}
+.content .rooms ul li.room.selected:hover {
+  background: #dededc;
+}
 .content .rooms ul li.room:last-child {
   border: 0;
 }

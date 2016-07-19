@@ -72,7 +72,7 @@ app.service('chatService', function($http, userService) {
   
   var loadChatTalk = function(){
     var json = "./chat/" + chatTalkInfo.room + ".json";
-    console.log(json);
+    // console.log(json);
     // Simple GET request example:
     $http({
       method: 'GET',
@@ -115,12 +115,12 @@ app.service('textService',function(){
   var changeHtmlConcern = function(text){
     var regexBL = /\r?\n/g;
     var regexArrows = /<|>/g;
-    text = text.replace(regexBL, function(match) {
-      return '<br>';
-    });
-    return text.replace(regexArrows, function(match) {
+    text = text.replace(regexArrows, function(match) {
       if(match === "<")return '&lt;';
       if(match === ">")return '&gt;';
+    });
+    return text.replace(regexBL, function(match) {
+      return '<br>';
     });
   };
   
@@ -169,6 +169,15 @@ app.service('textService',function(){
  * rooms API Controller
  */
 app.controller("roomsCtrl", function($scope, userService, roomService, chatService) {
+  
+  $scope.chatService = {};
+  
+  $scope.$watch(function () {
+    return chatService.getChatInfo();
+  }, function(newChatInfo, oldChatInfo) {
+    console.log($scope.chatService, newChatInfo, oldChatInfo);
+    $scope.chatService = newChatInfo;
+  }, true);
   
   //Array user information must be loaded from web service
   $scope.user = [
@@ -219,14 +228,14 @@ app.controller("chatCtrl", function($scope, userService, roomService, chatServic
       //must be loaded from web service and must be add spinner
       chatService.loadChatTalk();
       var chat = chatService.getChatTalk();
-      console.log(chat,'chat');
+      // console.log(chat,'chat');
     }
   }, true);
   
   $scope.$watch(function () {
     return chatService.getChatTalk();
   }, function(newChat, oldChat) {
-    console.log($scope.chatTalk, newChat, oldChat);
+    // console.log($scope.chatTalk, newChat, oldChat);
     $scope.chatTalk = newChat;
   }, true);
   

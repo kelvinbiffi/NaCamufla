@@ -22,7 +22,7 @@
 						<span class="user">{{x.user}}</span><br>
 						<span class="info">{{x.info}}</span><br>
 					</li>
-					<li ng-repeat="x in rooms" class="room" ng-click="loadChat(x)">
+					<li ng-repeat="x in rooms" class="room {{ (x.room == chatService.room ? 'selected' : '') }}" ng-click="loadChat(x)">
 						<span class="name">{{x.room}}</span><br>
 						<span class="user">{{x.size}}</span><br>
 					</li>

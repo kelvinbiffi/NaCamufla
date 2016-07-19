@@ -41,7 +41,9 @@
 @chat-talk-bg-color: #F2F2F2;
 @padding-chat-talk: 30px;
 
-@chat-room-bg-color: lighten(#c6c6c1,7%);
+@chat-room-color: #c6c6c1;
+@chat-room-bg-color: lighten(@chat-room-color,7%);
+@chat-room-bg-color-selected: lighten(@chat-room-color,10%);
 @chat-user-bg-color: #b0e0e6;
 
 @color-link: lighten(#00F,10%);
@@ -116,6 +118,12 @@ body{
           &:hover{
             cursor: pointer;
             background: darken(@chat-info-bg-color, 3%);
+          }
+          &.selected{
+            background: @chat-room-bg-color-selected;
+            &:hover{
+              background: @chat-room-bg-color-selected;
+            }
           }
           border-bottom: 1px solid darken(@chat-info-bg-color, 7%);
           &:last-child{
