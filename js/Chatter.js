@@ -10,10 +10,10 @@ app.service('userService', function() {
   var user = [];
   
   var setUser = function(newObj) {
-      roomList = newObj;
+      user = newObj;
   };
   var getUser = function(){
-      return roomList;
+      return user;
   };
   return {
     setUser: setUser,
@@ -72,7 +72,6 @@ app.service('chatService', function($http, userService) {
   
   var loadChatTalk = function(){
     var json = "./chat/" + chatTalkInfo.room + ".json";
-    // console.log(json);
     // Simple GET request example:
     $http({
       method: 'GET',
@@ -165,6 +164,35 @@ app.service('textService',function(){
   };
 });
 
+app.controller("userCtrl",function($scope, userService){
+  
+  $scope.control = true;
+  
+  $scope.name = "";
+  $scope.user = "";
+  $scope.code = "";
+  
+  $scope.keyEnter = function(event){
+    if(event.keyCode === 13){
+      $scope.setUser();
+    }
+  };
+  
+  $scope.setUser = function(){
+    if($scope.name.replace(" ","").trim() !== ""){
+      $scope.user = $scope.name.replace(" ","").trim().toLowerCase();
+      var d = new Date();
+      $scope.code = $scope.user + d.getTime();
+      $scope.useObj = [
+        {code: $scope.code, user : $scope.user, name : $scope.name},
+      ];
+      userService.setUser($scope.useObj);
+      $scope.control = false;
+    }
+  };
+  
+});
+
 /**
  * rooms API Controller
  */
@@ -179,10 +207,13 @@ app.controller("roomsCtrl", function($scope, userService, roomService, chatServi
     $scope.chatService = newChatInfo;
   }, true);
   
-  //Array user information must be loaded from web service
-  $scope.user = [
-    {code: "4g4gsgb", user : "kelvinbiffi", name : "Kelvin Biffi", info : "Only nature is secret"},
-  ];
+  $scope.user = [];
+  $scope.$watch(function () {
+    return userService.getUser();
+  }, function(newUser, oldUser) {
+    console.log($scope.chatService, newUser, oldUser);
+    $scope.user = newUser;
+  }, true);
   
   //Arrar avaliable rooms must be loaded from web service getRooms
   $scope.rooms = [
@@ -197,7 +228,6 @@ app.controller("roomsCtrl", function($scope, userService, roomService, chatServi
   };
   
   //send information to the services
-  userService.setUser($scope.user);
   roomService.setContacts($scope.rooms);
 });
 
@@ -208,7 +238,15 @@ app.controller("roomsCtrl", function($scope, userService, roomService, chatServi
 app.controller("chatCtrl", function($scope, userService, roomService, chatService, textService) {
   
   //Get information from services
-  $scope.user = userService.getUser();
+  //Watch userService
+  $scope.user = [];
+  $scope.$watch(function () {
+    return userService.getUser();
+  }, function(newUser, oldUser) {
+    console.log($scope.chatService, newUser, oldUser);
+    $scope.user = newUser;
+  }, true);
+  
   $scope.rooms = roomService.getContacts();
   $scope.textService = textService;
   
@@ -228,14 +266,12 @@ app.controller("chatCtrl", function($scope, userService, roomService, chatServic
       //must be loaded from web service and must be add spinner
       chatService.loadChatTalk();
       var chat = chatService.getChatTalk();
-      // console.log(chat,'chat');
     }
   }, true);
   
   $scope.$watch(function () {
     return chatService.getChatTalk();
   }, function(newChat, oldChat) {
-    // console.log($scope.chatTalk, newChat, oldChat);
     $scope.chatTalk = newChat;
   }, true);
   
