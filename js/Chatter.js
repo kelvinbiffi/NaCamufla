@@ -306,4 +306,12 @@ app.controller("chatCtrl", function($scope, userService, roomService, chatServic
     }
   };
   
+  //When the window was closed or reloaded remove the participant from the chat
+  window.onbeforeunload = function(){
+	  $.getJSON("ws/getJson.php?action=leaveChat&chatId=testeid1&participantCode="+$scope.user[0].code, function(result){
+          $.each(result, function(i, returned){              
+          });
+      });
+  } 
+  
 });
