@@ -8,7 +8,7 @@ var app = angular.module("Chatter", [
  */
 app.service('userService', function() {
   var user = [];
-  
+
   var setUser = function(newObj) {
       user = newObj;
   };
@@ -24,18 +24,34 @@ app.service('userService', function() {
 /**
  * Service to send info about rooms cross controlers
  */
-app.service('roomService', function() {
+app.service('roomService', function($http) {
   var roomList = [];
 
-  var setContacts = function(newObj) {
-      roomList = newObj;
+  /**
+   * Function to load rooms
+   */
+  var fillRooms = function() {
+      var url = "./ws/getRooms.php";
+      $http({
+        method: 'GET',
+        url: url
+      }).then(function successCallback(obj) {
+        console.log(obj,'obj rooms');
+        roomList = obj.data;
+        console.log(roomList,'rooms loaded');
+      }, function errorCallback(data, status, headers, config) {
+        console.log("Error loading rooms",data, status, headers, config);
+      });
+      setTimeout(fillRooms,4000);
   };
-  var getContacts = function(){
-      return roomList;
+
+  var getRooms = function(){
+    return roomList;
   };
+
   return {
-    setContacts: setContacts,
-    getContacts: getContacts
+    fillRooms: fillRooms,
+    getRooms: getRooms
   };
 });
 
@@ -45,34 +61,39 @@ app.service('roomService', function() {
 app.service('chatService', function($http, userService) {
   var chatTalk = [];
   var chatTalkInfo = {};
-  
+
   var scrollDown = function(time){
     console.log('controlScroll');
     var n = $('#chat-talk').height() * 100;
     $('#chat-talk').animate({ scrollTop: n }, time);
   };
-  
+
   var setChatTalk = function(newObj) {
     chatTalk = newObj;
   };
   var getChatTalk = function(){
     return chatTalk;
   };
-  
+
   var setChatInfo = function(newObj) {
     chatTalkInfo = newObj;
   };
   var getChatInfo = function(){
     return chatTalkInfo;
   };
-  
+
+  /**
+   * Function to send a new message
+   */
   var addMessage = function(obj){
     chatTalk.push(obj);
   };
-  
+
+  /**
+   * Function to load chat messages from json file
+   */
   var loadChatTalk = function(){
     var json = "./chat/" + chatTalkInfo.room + ".json";
-    // Simple GET request example:
     $http({
       method: 'GET',
       url: json
@@ -85,13 +106,13 @@ app.service('chatService', function($http, userService) {
         clearTimeout(controlScrollDown);
       },500);
     }, function errorCallback(data, status, headers, config) {
-      console.log("error",data, status, headers, config);
+      console.log("Error loading chat talk",data, status, headers, config);
       if(data.status === 404 && data.statusText === "Not Found"){
         chatTalk = [];
       }
     });
   };
-  
+
   return {
     setChatTalk: setChatTalk,
     getChatTalk: getChatTalk,
@@ -105,12 +126,12 @@ app.service('chatService', function($http, userService) {
 
 
 /**
- * Service to manipulate text sent or read
+ * Service to manipulate text sent or read replace links or specific characters per html objects
  */
 app.service('textService',function(){
-  
+
   //***have to add video crawler***
-  
+
   var changeHtmlConcern = function(text){
     var regexBL = /\r?\n/g;
     var regexArrows = /<|>/g;
@@ -122,7 +143,7 @@ app.service('textService',function(){
       return '<br>';
     });
   };
-  
+
   var emoticons = function(text){
     var urlRegex = /&lt;3|\(y\)/g;
     return text.replace(urlRegex, function(emoticon) {
@@ -135,19 +156,19 @@ app.service('textService',function(){
       return emoticon;
     });
   };
-  
+
   var returnLink = function(link){
     var label = link.substr(0,10) + "..." + link.substr(link.length-5,5);
     return '<a title="'+link+'" href="' + link + '" target="_blank">' + label + '...</a>';
   };
-  
+
   var imaged = function(text){
     var urlRegex = /(http[s]?:\/\/[^\s]+)*(jpg|png|gif)/g;
     return text.replace(urlRegex, function(url) {
       return returnLink(url) + '<br><img class="image" src="' + url + '" />';
     });
   };
-  
+
   //manipulate http urls sent
   var urlify = function(text) {
       text = changeHtmlConcern(text);
@@ -158,28 +179,35 @@ app.service('textService',function(){
           return returnLink(url);
       });
   };
-  
+
   return {
     urlify: urlify
   };
 });
 
-app.controller("userCtrl",function($scope, userService){
-  
+app.controller("userCtrl",function($scope, userService, roomService){
+
   $scope.control = true;
-  
+
   $scope.name = "";
   $scope.user = "";
   $scope.code = "";
-  
+
+  /**
+   * function to log in the chat with ket enter
+   */
   $scope.keyEnter = function(event){
     if(event.keyCode === 13){
       $scope.setUser();
     }
   };
-  
+
+  /**
+   * Set user information
+   */
   $scope.setUser = function(){
     if($scope.name.replace(" ","").trim() !== ""){
+      roomService.fillRooms();
       $scope.user = $scope.name.replace(" ","").trim().toLowerCase();
       var d = new Date();
       $scope.code = $scope.user + d.getTime();
@@ -190,23 +218,25 @@ app.controller("userCtrl",function($scope, userService){
       $scope.control = false;
     }
   };
-  
+
 });
 
 /**
  * rooms API Controller
  */
 app.controller("roomsCtrl", function($scope, userService, roomService, chatService) {
-  
+
   $scope.chatService = {};
-  
+
+  //Watch chatInfo
   $scope.$watch(function () {
     return chatService.getChatInfo();
   }, function(newChatInfo, oldChatInfo) {
     console.log($scope.chatService, newChatInfo, oldChatInfo);
     $scope.chatService = newChatInfo;
   }, true);
-  
+
+  //watch user
   $scope.user = [];
   $scope.$watch(function () {
     return userService.getUser();
@@ -214,29 +244,29 @@ app.controller("roomsCtrl", function($scope, userService, roomService, chatServi
     console.log($scope.chatService, newUser, oldUser);
     $scope.user = newUser;
   }, true);
-  
-  //Arrar avaliable rooms must be loaded from web service getRooms
-  $scope.rooms = [
-    {room: "8yg74g4gsgb", size : "4545"},
-    {room: "98t7fed80t7vd098y", size : "5657"},
-    {room: "sdvdvbdfb", size : "455"},
-  ];
-  
+
+  //Watch rooms
+  $scope.rooms = [];
+  $scope.$watch(function () {
+    return roomService.getRooms();
+  }, function(newRooms, oldRooms) {
+    console.log($scope.rooms, newRooms, oldRooms);
+    $scope.rooms = newRooms;
+  }, true);
+
   $scope.loadChat = function(roomInfo){
     // chatService.setChatTalk([]);//Clear chat content
     chatService.setChatInfo(roomInfo);
   };
-  
-  //send information to the services
-  roomService.setContacts($scope.rooms);
+
 });
 
 
 /**
  * chat API controller
  */
-app.controller("chatCtrl", function($scope, userService, roomService, chatService, textService) {
-  
+app.controller("chatCtrl", function($scope, $http, userService, roomService, chatService, textService) {
+
   //Get information from services
   //Watch userService
   $scope.user = [];
@@ -246,21 +276,21 @@ app.controller("chatCtrl", function($scope, userService, roomService, chatServic
     console.log($scope.chatService, newUser, oldUser);
     $scope.user = newUser;
   }, true);
-  
-  $scope.rooms = roomService.getContacts();
+
+  $scope.rooms = roomService.getRooms();
   $scope.textService = textService;
-  
+
   //Variables
   $scope.chatInfo = [];
   $scope.chatTalk = [];
   $scope.textArea = "";
-  
+
   //Watching chatInfo from rooms service set above
   $scope.$watch(function () {
     return chatService.getChatInfo();
   }, function(currentChatInfo, oldChatInfo) {
     $scope.chatInfo = [currentChatInfo];
-    
+
     //if a room was selected
     if(!angular.equals({}, currentChatInfo)){
       //must be loaded from web service and must be add spinner
@@ -268,22 +298,35 @@ app.controller("chatCtrl", function($scope, userService, roomService, chatServic
       var chat = chatService.getChatTalk();
     }
   }, true);
-  
+
+  /**
+   * Watch chat
+   */
   $scope.$watch(function () {
     return chatService.getChatTalk();
   }, function(newChat, oldChat) {
     $scope.chatTalk = newChat;
   }, true);
-  
-  //Functions
+
+  //*** Functions Session ***
+
+  /**
+   * Function to return a new message object
+   */
   $scope.newMessage = function(){
     var self = this;
     self.code = $scope.user[0].code;
+    self.user = $scope.user[0].user;
     self.name = $scope.user[0].name;
     self.text = $scope.textArea;
     self.type = "user";
   };
-  
+
+  /**
+   * Control keyboard enter key
+   * if key enter was pressed alone send message
+   * if key enter was pressed with Ctrl key break line
+   */
   $scope.keyEnter = function(event){
     if(event.keyCode === 13 && event.ctrlKey === false){
       $scope.sendMessage();
@@ -291,11 +334,15 @@ app.controller("chatCtrl", function($scope, userService, roomService, chatServic
       $scope.textArea = $scope.textArea + "\r\n";
     }
   };
-  
+
+
+  /**
+   * Send a new message
+   */
   $scope.sendMessage = function() {
     if($scope.textArea.trim() !== ""){
       chatService.addMessage(new $scope.newMessage());
-      
+
       chatService.scrollDown(500);
       var controlScrollDown = setTimeout(function(){
         console.log('controlScrollTimeOut');
@@ -305,13 +352,22 @@ app.controller("chatCtrl", function($scope, userService, roomService, chatServic
       $scope.textArea = "";
     }
   };
-  
-  //When the window was closed or reloaded remove the participant from the chat
+
+  /**
+   * When the window was closed or reloaded remove the participant from the chat
+   */
   window.onbeforeunload = function(){
-	  $.getJSON("ws/getJson.php?action=leaveChat&chatId=testeid1&participantCode="+$scope.user[0].code, function(result){
-          $.each(result, function(i, returned){              
-          });
+	  $http({
+      method: 'GET',
+      url: "ws/getJson.php?action=leaveChat&chatId=testeid1&participantCode="+$scope.user[0].code
+    }).then(function successCallback(result) {
+      console.log(result,'result close window');
+      $.each(result, function(i, returned){
+        console.log(i,returned,'returned close window');
       });
-  } 
-  
+    }, function errorCallback(data, status, headers, config) {
+      console.log("error",data, status, headers, config);
+    });
+  }
+
 });

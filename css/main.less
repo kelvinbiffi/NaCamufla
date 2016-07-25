@@ -33,6 +33,7 @@
 
 //Welcome variables
 @color-white: #FFFFFF;
+@color-black: #000000;
 
 //rooms variables
 @room-bg-color: lighten(#dfdfd9,7%);
@@ -60,7 +61,7 @@
 
 
 *{
-	font-family: 'Source Sans Pro';   
+	font-family: 'Source Sans Pro';
 }
 
 body{
@@ -131,24 +132,41 @@ body{
     margin-top: 7px;
     background: @chat-talk-bg-color;
     .boxShadow(0 1px 3px 1px rgba(0,0,0,0.2));
-  	
+
     @media (max-width: @sm-max) {
   		width: 100%;
   		height: 100%;
       margin: 0;
   	}
-    
+
     @media (min-width: @md-min) and (max-width: @md-max) {
       .calcWidth(@md-min, 30);
     }
-    
+
     @media (min-width: @lg-min) {
   		.calcWidth(@lg-min, 30);
   	}
-  	
+
   	.rooms{
+      .close{
+        display: none;
+      }
       @media (max-width: @xs-max) {
     		display: none;
+        &.open{
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        .close{
+          cursor: pointer;
+          display: block;
+          position: absolute;
+          z-index: 999;
+          font-size: 34px;
+          right: 0;
+          top: 0;
+        }
     	}
   		width: 25%;
   		height: 100%;
@@ -167,6 +185,20 @@ body{
           &.user{
             height: 90px;
             border-bottom: 1px solid darken(@chat-info-bg-color, 7%);
+          }
+          &.new-chat{
+            text-align: center;
+            border-bottom: 1px solid darken(@chat-info-bg-color, 7%);
+            span{
+              padding: 7px;
+              &::before{
+                font-size: 50px;
+              }
+            }
+            &:hover{
+              cursor: pointer;
+              background: darken(@chat-info-bg-color, 3%);
+            }
           }
           &.room{
             cursor: pointer;
@@ -202,7 +234,7 @@ body{
         }
   		}
   	}
-    
+
   	.chat{
   		float: left;
   		position: relative;
@@ -214,6 +246,22 @@ body{
   		.chat-info{
   			width: 100%;
   			height: 100px;
+        .rooms-buttons{
+          display: none;
+          font-size: 30px;
+          float: left;
+          padding: 8px;
+          border-right: 1px solid darken(@chat-info-bg-color, 7%);
+          margin-right: 10px;
+          cursor: pointer;
+          color: @color-black;
+        }
+        @media (max-width: @xs-max){
+          height: 50px;
+          .rooms-buttons{
+            display: block;
+          }
+        }
   			background: @chat-info-bg-color;
         border-bottom: 1px solid darken(@chat-info-bg-color, 7%);
   			ul{
@@ -273,13 +321,13 @@ body{
                 cursor: text;
                 white-space: pre-wrap;
                 overflow-wrap: break-word;
-                
+
                 .emoticon{
                   display: inline-block;
                   margin-left: 1px;
                   margin-right: 1px;
                 }
-                
+
                 .fa-heart{
                   .emoticon;
                   color: #E62F2F;
@@ -342,12 +390,12 @@ body{
         div{
           height: 100px;
         }
-        
+
         .emoticons{
           width: 10%;
           float: left;
         }
-        
+
   			.field{
           position: relative;
           width: 80%;

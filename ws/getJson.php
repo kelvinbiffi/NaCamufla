@@ -3,7 +3,7 @@ header("Content-type: text/javascript; charset=iso-8859-1");
 $resp = '';
 require_once 'functions.php';
 $f = new functions();
-if(isset($_REQUEST['action']) && isset($_REQUEST['chatId'])){	
+if(isset($_REQUEST['action']) && isset($_REQUEST['chatId'])){
 	//Create a new chat
 	if($_REQUEST['action'] == 'createChat'){
 		if(isset($_REQUEST['ownerNick']) && isset($_REQUEST['dateExpiration']) && isset($_REQUEST['howMuchKeep'])){

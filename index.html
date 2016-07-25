@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Chatter</title>
-		
+
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="css/main.css">
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
@@ -18,16 +18,20 @@
 				<input type="text" ng-keyup="keyEnter($event)"  ng-model="name" placeholder="Type your name"><br>
 				<span class="button" ng-click="setUser()">Enter</span>
 			</div>
-		</div>		
+		</div>
 		<div class="chat">
 			<div class="content">
 				<!-- Contact section -->
 				<div class="rooms" ng-controller="roomsCtrl">
+					<span class="close fa fa-times"></span>
 					<ul>
 						<li ng-repeat="x in user" class="user">
 							<span class="code">{{x.code}}</span>
 							<span class="name">{{x.name}}</span><br>
 							<span class="user">{{x.user}}</span><br>
+						</li>
+						<li class="new-chat">
+							<span class="fa fa-plus-circle"></span>
 						</li>
 						<li ng-repeat="x in rooms" class="room {{ (x.room == chatService.room ? 'selected' : '') }}" ng-click="loadChat(x)">
 							<span class="name">{{x.room}}</span><br>
@@ -35,11 +39,12 @@
 						</li>
 					</ul>
 				</div>
-				
+
 				<!-- chat section -->
 				<div id="chat" class="chat" ng-controller="chatCtrl">
 					<!-- Info chat section -->
 					<div class="chat-info">
+						<span class="rooms-buttons fa fa-bars"></span>
 						<div class="profile-img"></div>
 						<span class="name"></span>
 						<ul>
@@ -49,25 +54,26 @@
 							</li>
 						</ul>
 					</div>
-					
+
 					<!-- Info chat section -->
 					<div id="chat-talk" class="chat-talk">
 						<ul>
 							<li ng-repeat="x in chatTalk" class="{{ (user[0].user !== x.user ? 'room' : 'user') }}">
 								<div class="chat-talk-info">
-									<span class="chat-user-name" alt="{{ x.code }}">{{ (x.code !== chatTalk[$index-1].code ? x.name : "") }}</span>
-									<br ng-if="x.code !== chatTalk[$index-1].code">
+									<span class="chat-user-name" alt="{{ x.user }}">{{ (x.user !== chatTalk[$index-1].user ? x.name : "") }}</span>
+									<br ng-if="x.user !== chatTalk[$index-1].user">
 									<span class="chat-user-text" ng-bind-html="textService.urlify(x.text)"></span>
-									<span class="fa fa-caret-{{ ((user[0].user !== x.user ? 'room' : 'user') == 'user' ? 'right' : 'left') }} last-message {{ (user[0].code !== x.code ? 'room' : 'user') }}" ng-if="x.code !== chatTalk[$index+1].code"></span>
+									<span class="fa fa-caret-{{ ((user[0].user !== x.user ? 'room' : 'user') == 'user' ? 'right' : 'left') }}
+									last-message {{ (user[0].user !== x.user ? 'room' : 'user') }}" ng-if="x.user !== chatTalk[$index+1].user"></span>
 								</div>
 							</li>
 						</ul>
 					</div>
-					
+
 					<!-- textarea section -->
 					<div class="text-area">
 						<div class="emoticons">
-							
+
 						</div>
 						<div class="field">
 							<textarea name="name" ng-keyup="keyEnter($event)" placeholder="Type a message" ng-model="textArea"></textarea>
@@ -78,11 +84,11 @@
 					</div>
 				</div>
 				<!--div id="chat" class="chat" ng-controller="chatCtrl">
-					
+
 				</div-->
 			</div>
 		</div>
-		
+
 		<script src="js/jquery-3.0.0.min.js" type="text/javascript"></script>
 		<script src="js/jQuery.js" type="text/javascript"></script>
 	</body>

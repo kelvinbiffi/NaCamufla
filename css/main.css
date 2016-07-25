@@ -101,9 +101,26 @@ body {
   border-right: 1px solid #dfdfd9;
   margin-left: -1px;
 }
+.chat .content .rooms .close {
+  display: none;
+}
 @media (max-width: 767px) {
   .chat .content .rooms {
     display: none;
+  }
+  .chat .content .rooms.open {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .chat .content .rooms .close {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    z-index: 999;
+    font-size: 34px;
+    right: 0;
+    top: 0;
   }
 }
 .chat .content .rooms ul {
@@ -118,6 +135,20 @@ body {
 .chat .content .rooms ul li.user {
   height: 90px;
   border-bottom: 1px solid #dfdfd9;
+}
+.chat .content .rooms ul li.new-chat {
+  text-align: center;
+  border-bottom: 1px solid #dfdfd9;
+}
+.chat .content .rooms ul li.new-chat span {
+  padding: 7px;
+}
+.chat .content .rooms ul li.new-chat span::before {
+  font-size: 50px;
+}
+.chat .content .rooms ul li.new-chat:hover {
+  cursor: pointer;
+  background: #e8e8e4;
 }
 .chat .content .rooms ul li.room {
   cursor: pointer;
@@ -166,6 +197,24 @@ body {
   height: 100px;
   background: #efefec;
   border-bottom: 1px solid #dfdfd9;
+}
+.chat .content .chat .chat-info .rooms-buttons {
+  display: none;
+  font-size: 30px;
+  float: left;
+  padding: 8px;
+  border-right: 1px solid #dfdfd9;
+  margin-right: 10px;
+  cursor: pointer;
+  color: #000000;
+}
+@media (max-width: 767px) {
+  .chat .content .chat .chat-info {
+    height: 50px;
+  }
+  .chat .content .chat .chat-info .rooms-buttons {
+    display: block;
+  }
 }
 .chat .content .chat .chat-info ul {
   margin: 0;
