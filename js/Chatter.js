@@ -26,7 +26,7 @@ app.service('userService', function() {
  */
 app.service('roomService', function($http) {
   var roomList = [];
-
+  var roomOpen = false;
   /**
    * Function to load rooms
    */
@@ -49,9 +49,25 @@ app.service('roomService', function($http) {
     return roomList;
   };
 
+
+  var openRoomsContent = function(){
+    roomOpen = true;
+  }
+
+  var closeRoomsContent = function(){
+    roomOpen = false;
+  }
+
+  var getRoomsContentOpen = function(){
+    return roomOpen;
+  }
+
   return {
     fillRooms: fillRooms,
-    getRooms: getRooms
+    getRooms: getRooms,
+    openRoomsContent: openRoomsContent,
+    closeRoomsContent: closeRoomsContent,
+    getRoomsContentOpen: getRoomsContentOpen
   };
 });
 
@@ -185,6 +201,8 @@ app.service('textService',function(){
   };
 });
 
+
+
 app.controller("userCtrl",function($scope, userService, roomService){
 
   $scope.control = true;
@@ -254,9 +272,23 @@ app.controller("roomsCtrl", function($scope, userService, roomService, chatServi
     $scope.rooms = newRooms;
   }, true);
 
+  //watch room open status (Mobile version)
+  $scope.roomsOpen = false;
+  $scope.$watch(function () {
+    return roomService.getRoomsContentOpen();
+  }, function(newRoomsOpenedStatus, oldRoomsOpenedStatus) {
+    console.log($scope.roomsOpen, newRoomsOpenedStatus, oldRoomsOpenedStatus);
+    $scope.roomsOpen = newRoomsOpenedStatus;
+  }, true);
+
+  $scope.closeRooms = function(){
+    roomService.closeRoomsContent();
+  };
+
   $scope.loadChat = function(roomInfo){
     // chatService.setChatTalk([]);//Clear chat content
     chatService.setChatInfo(roomInfo);
+    roomService.closeRoomsContent();
   };
 
 });
@@ -266,6 +298,10 @@ app.controller("roomsCtrl", function($scope, userService, roomService, chatServi
  * chat API controller
  */
 app.controller("chatCtrl", function($scope, $http, userService, roomService, chatService, textService) {
+
+  $scope.openRooms = function(){
+    roomService.openRoomsContent();
+  };
 
   //Get information from services
   //Watch userService

@@ -22,8 +22,8 @@
 		<div class="chat">
 			<div class="content">
 				<!-- Contact section -->
-				<div class="rooms" ng-controller="roomsCtrl">
-					<span class="close fa fa-times"></span>
+				<div ng-controller="roomsCtrl" class="rooms {{ (roomsOpen == true ? 'open' : '') }}">
+					<span class="close fa fa-times" ng-click="closeRooms()"></span>
 					<ul>
 						<li ng-repeat="x in user" class="user">
 							<span class="code">{{x.code}}</span>
@@ -44,7 +44,7 @@
 				<div id="chat" class="chat" ng-controller="chatCtrl">
 					<!-- Info chat section -->
 					<div class="chat-info">
-						<span class="rooms-buttons fa fa-bars"></span>
+						<span class="rooms-buttons fa fa-bars" ng-click="openRooms()"></span>
 						<div class="profile-img"></div>
 						<span class="name"></span>
 						<ul>
