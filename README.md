@@ -2,7 +2,7 @@
 
 ### Table of contents
 - [Chatter App](#chatter-app)
-    - [](#developers)
+    - [Developers](#developers)
     - [Description](#description)
     - [Installation and Configuration](#installation-and-configuration)
     - [Development](#development)
