@@ -12,6 +12,7 @@
 		<script src="js/Chatter.js" type="text/javascript"></script>
 	</head>
 	<body>
+
 		<div ng-controller="userCtrl" class="welcome {{ control ? 'show' : ''}}">
 			<div class="content">
 				<span class="chatter">Chatter</span><br>
@@ -19,6 +20,7 @@
 				<span class="button" ng-click="setUser()">Enter</span>
 			</div>
 		</div>
+
 		<div class="chat">
 			<div class="content">
 				<!-- Contact section -->
@@ -55,8 +57,16 @@
 						</ul>
 					</div>
 
+					<div id="tuts" class="tuts {{ (tutsOpen == false ? 'hidden' : '') }}" >
+						<div class="info">
+							<h1>Welcome to Chatter</h1>
+							<p class="mobile">Tap the hamburger icon <span class="hamburger fa fa-bars"></span> to open the rooms menu and</p>
+							<p>select or create a new room to start a chat</p>
+						</div>
+					</div>
+
 					<!-- Info chat section -->
-					<div id="chat-talk" class="chat-talk">
+					<div id="chat-talk" class="chat-talk {{ (tutsOpen == true ? 'hidden' : '') }}" >
 						<ul>
 							<li ng-repeat="x in chatTalk" class="{{ (user[0].user !== x.user ? 'room' : 'user') }}">
 								<div class="chat-talk-info">
@@ -71,7 +81,7 @@
 					</div>
 
 					<!-- textarea section -->
-					<div class="text-area">
+					<div class="text-area {{ (tutsOpen == true ? 'hidden' : '') }}" >
 						<div class="emoticons">
 
 						</div>

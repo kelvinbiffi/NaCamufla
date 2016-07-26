@@ -320,6 +320,7 @@ app.controller("chatCtrl", function($scope, $http, userService, roomService, cha
   $scope.chatInfo = [];
   $scope.chatTalk = [];
   $scope.textArea = "";
+  $scope.tutsOpen = true;//Variable to show or not show tuts content
 
   //Watching chatInfo from rooms service set above
   $scope.$watch(function () {
@@ -329,6 +330,7 @@ app.controller("chatCtrl", function($scope, $http, userService, roomService, cha
 
     //if a room was selected
     if(!angular.equals({}, currentChatInfo)){
+      $scope.tutsOpen = false;//To hide tuts content
       //must be loaded from web service and must be add spinner
       chatService.loadChatTalk();
       var chat = chatService.getChatTalk();

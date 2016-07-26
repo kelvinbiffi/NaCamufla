@@ -161,6 +161,7 @@ body {
 }
 .chat .content .rooms ul li.room.selected {
   background: #dededc;
+  font-weight: 600;
 }
 .chat .content .rooms ul li.room.selected:hover {
   background: #dededc;
@@ -236,10 +237,45 @@ body {
   font-size: 16px;
   font-style: italic;
 }
+.chat .content .chat .tuts {
+  overflow-y: scroll;
+  width: 100%;
+  background: #F2F2F2;
+}
+.chat .content .chat .tuts.hidden {
+  display: none;
+}
+.chat .content .chat .tuts .info {
+  padding: 30px;
+}
+.chat .content .chat .tuts .info h1 {
+  font-size: 40px;
+}
+.chat .content .chat .tuts .info p {
+  font-size: 16px;
+}
+.chat .content .chat .tuts .info p.mobile {
+  display: none;
+}
+@media (max-width: 767px) {
+  .chat .content .chat .tuts .info p.mobile {
+    display: block;
+  }
+}
+.chat .content .chat .tuts .info p .hamburger {
+  font-size: 30px;
+  padding: 10px;
+  background: #e6e6e1;
+  border-radius: 50px;
+  border: 1px solid #ddddd6;
+}
 .chat .content .chat .chat-talk {
   overflow-y: scroll;
   width: 100%;
   background: #F2F2F2;
+}
+.chat .content .chat .chat-talk.hidden {
+  display: none;
 }
 .chat .content .chat .chat-talk ul {
   margin: 0;
@@ -338,6 +374,9 @@ body {
   position: absolute;
   bottom: 0;
   border-top: 1px solid #dfdfd9;
+}
+.chat .content .chat .text-area.hidden {
+  display: none;
 }
 .chat .content .chat .text-area div {
   height: 100px;
