@@ -1,7 +1,7 @@
 
 
 $(document).ready(function(){
-  var width = $(window).width()
+  var width = $(window).width();
   //When resize screen recalculate chat-talk height
   $("#chat-talk").height(($("#chat").height() - (width < 768 ? 150 : 200) ));
   $("#tuts").height(($("#chat").height() - (width < 768 ? 50 : 100) ));
@@ -9,7 +9,7 @@ $(document).ready(function(){
 
   //When resize screen recalculate chat-talk height
   $( window ).resize(function(){
-    width = $(window).width()
+    width = $(window).width();
     $("#chat-talk").height(($("#chat").height() - (width < 768 ? 150 : 200) ));
     $("#tuts").height(($("#chat").height() - (width < 768 ? 50 : 100) ));
     $("#listRooms").height(($("#chat").height() - (width < 768 ? 100 : 100) ));
