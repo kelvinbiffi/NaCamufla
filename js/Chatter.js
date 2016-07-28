@@ -6,7 +6,7 @@ var app = angular.module("Chatter", [
 /**
  * Service to send info about user cross controlers
  */
-app.service('userService', function() {
+app.service('userService', function($http) {
   var user = [];
 
   var setUser = function(newObj) {
@@ -15,9 +15,29 @@ app.service('userService', function() {
   var getUser = function(){
       return user;
   };
+
+  /**
+   * Function to generate user code
+   */
+  var generateCode = function(callback){
+    var url = "./ws/getJson.php";
+    var data = {action: "generateCode"};
+    $http({
+      method: 'GET',
+      url: url,
+      params: data
+    }).then(function successCallback(obj) {
+      console.log('user code',obj.data.idGenerated);
+      callback(obj.data.idGenerated);
+    }, function errorCallback(data, status, headers, config) {
+      console.log("Error generate user code",data, status, headers, config);
+    });
+  };
+
   return {
     setUser: setUser,
-    getUser: getUser
+    getUser: getUser,
+    generateCode: generateCode
   };
 });
 
@@ -27,6 +47,7 @@ app.service('userService', function() {
 app.service('roomService', function($http) {
   var roomList = [];
   var roomOpen = false;
+
   /**
    * Function to load rooms
    */
@@ -42,7 +63,7 @@ app.service('roomService', function($http) {
       }, function errorCallback(data, status, headers, config) {
         console.log("Error loading rooms",data, status, headers, config);
       });
-      setTimeout(fillRooms,4000);
+      setTimeout(fillRooms,5000);
   };
 
   var getRooms = function(){
@@ -52,15 +73,15 @@ app.service('roomService', function($http) {
 
   var openRoomsContent = function(){
     roomOpen = true;
-  }
+  };
 
   var closeRoomsContent = function(){
     roomOpen = false;
-  }
+  };
 
   var getRoomsContentOpen = function(){
     return roomOpen;
-  }
+  };
 
   return {
     fillRooms: fillRooms,
@@ -226,14 +247,16 @@ app.controller("userCtrl",function($scope, userService, roomService){
   $scope.setUser = function(){
     if($scope.name.replace(" ","").trim() !== ""){
       roomService.fillRooms();
-      $scope.user = $scope.name.replace(" ","").trim().toLowerCase();
-      var d = new Date();
-      $scope.code = $scope.user + d.getTime();
-      $scope.useObj = [
-        {code: $scope.code, user : $scope.user, name : $scope.name},
-      ];
-      userService.setUser($scope.useObj);
-      $scope.control = false;
+      userService.generateCode(function(code){
+        $scope.user = $scope.name.replace(" ","").trim().toLowerCase();
+        var d = new Date();
+        $scope.code = code;
+        $scope.useObj = [
+          {code: $scope.code, user : $scope.user, name : $scope.name},
+        ];
+        userService.setUser($scope.useObj);
+        $scope.control = false;
+      });
     }
   };
 
@@ -406,6 +429,6 @@ app.controller("chatCtrl", function($scope, $http, userService, roomService, cha
     }, function errorCallback(data, status, headers, config) {
       console.log("error",data, status, headers, config);
     });
-  }
+  };
 
 });
