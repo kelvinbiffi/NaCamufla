@@ -34,10 +34,11 @@
 						</li>
 					</ul>
 					<ul id="listRooms" class="listRooms">
-						<li class="new-chat">
+						<li class="new-chat" ng-click="createNewRoom()">
 							<span class="fa fa-plus-circle"></span>
 						</li>
 						<li ng-repeat="x in rooms" class="room {{ (x.room == chatService.room ? 'selected' : '') }}" ng-click="loadChat(x)">
+							<span class="roomId"></span>
 							<span class="name">{{x.room}}</span><br>
 							<span class="user">{{x.size}}</span><br>
 						</li>

@@ -1,4 +1,6 @@
-//Initialize application
+/**
+ * Initialize application
+ */
 var app = angular.module("Chatter", [
     'ngSanitize' //Working with "ng-bind-html" to show html tags on interface
 ]);
@@ -18,6 +20,8 @@ app.service('userService', function($http) {
 
   /**
    * Function to generate user code
+   *
+   * @param callbak function
    */
   var generateCode = function(callback){
     var url = "./ws/getJson.php";
@@ -44,12 +48,12 @@ app.service('userService', function($http) {
 /**
  * Service to send info about rooms cross controlers
  */
-app.service('roomService', function($http) {
+app.service('roomService', function($http, userService) {
   var roomList = [];
   var roomOpen = false;
 
   /**
-   * Function to load rooms
+   * Function to load avaliable rooms
    */
   var fillRooms = function() {
       var url = "./ws/getRooms.php";
@@ -64,6 +68,58 @@ app.service('roomService', function($http) {
         console.log("Error loading rooms",data, status, headers, config);
       });
       setTimeout(fillRooms,5000);
+  };
+
+  /**
+   * To include user in the room
+   */
+  var enterInChat = function(room, callback){
+    console.log(room,'ROOM');
+    var user = userService.getUser();
+    var url = "./ws/getJson.php";
+    var data = {
+      action: "enterInChat",
+      participantNick: user[0].user,
+      participantCode: user[0].code,
+      chatId: room.room
+    };
+    $http({
+      method: 'GET',
+      url: url,
+      params: data
+    }).then(function successCallback(obj) {
+      console.log(obj,'Enter in room');
+      callback();
+    }, function errorCallback(data, status, headers, config) {
+      console.log("Error enter in room",data, status, headers, config);
+    });
+  };
+  /**
+   * Create a new room
+   *
+   * @param user object
+   */
+  var createNewRoom = function(user){
+    var timestamp = new Date().getTime();
+    var chatId = user[0].user + timestamp;
+    var url = "./ws/getJson.php";
+    var data = {
+      action: "createChat",
+      ownerNick: user[0].user,
+      ownerCode: user[0].code,
+      dateExpiration: "10",
+      howMuchKeep: "50",
+      chatId: chatId
+    };
+    $http({
+      method: 'GET',
+      url: url,
+      params: data
+    }).then(function successCallback(obj) {
+      console.log(obj,'New Room');
+    }, function errorCallback(data, status, headers, config) {
+      console.log("Error create new room",data, status, headers, config);
+    });
   };
 
   var getRooms = function(){
@@ -85,6 +141,8 @@ app.service('roomService', function($http) {
 
   return {
     fillRooms: fillRooms,
+    createNewRoom: createNewRoom,
+    enterInChat: enterInChat,
     getRooms: getRooms,
     openRoomsContent: openRoomsContent,
     closeRoomsContent: closeRoomsContent,
@@ -123,6 +181,7 @@ app.service('chatService', function($http, userService) {
    * Function to send a new message
    */
   var addMessage = function(obj){
+    console.log(chatTalk, obj);
     chatTalk.push(obj);
   };
 
@@ -130,12 +189,20 @@ app.service('chatService', function($http, userService) {
    * Function to load chat messages from json file
    */
   var loadChatTalk = function(){
-    var json = "./chat/" + chatTalkInfo.room + ".json";
+    var user = userService.getUser();
+    var url = "./ws/getJson.php";
+    var data = {
+      action: "returnChat",
+      chatId: chatTalkInfo.room,
+      participantCode: user[0].code
+    };
     $http({
       method: 'GET',
-      url: json
-    }).then(function successCallback(data) {
-      chatTalk = data.data;
+      url: url,
+      params: data
+    }).then(function successCallback(obj) {
+      console.log(obj,"load chat");
+      chatTalk = obj.data;
       //Slide down chat content
       var controlScrollDown = setTimeout(function(){
         console.log('controlScrollTimeOut');
@@ -208,6 +275,7 @@ app.service('textService',function(){
 
   //manipulate http urls sent
   var urlify = function(text) {
+    if(text !== undefined && text !== ""){
       text = changeHtmlConcern(text);
       text = imaged(text);
       text = emoticons(text);
@@ -215,6 +283,7 @@ app.service('textService',function(){
       return text.replace(urlRegex, function(url) {
           return returnLink(url);
       });
+    }
   };
 
   return {
@@ -304,14 +373,29 @@ app.controller("roomsCtrl", function($scope, userService, roomService, chatServi
     $scope.roomsOpen = newRoomsOpenedStatus;
   }, true);
 
+  /**
+   * closeRooms content (This work just in mobile)
+   */
   $scope.closeRooms = function(){
     roomService.closeRoomsContent();
   };
 
+  /**
+   * Call function from room service to create a new room
+   */
+  $scope.createNewRoom = function(){
+    roomService.createNewRoom($scope.user);
+  };
+
+  /**
+   * Set room info at charService
+   */
   $scope.loadChat = function(roomInfo){
     // chatService.setChatTalk([]);//Clear chat content
-    chatService.setChatInfo(roomInfo);
-    roomService.closeRoomsContent();
+    roomService.enterInChat(roomInfo, function(){
+      chatService.setChatInfo(roomInfo);
+      roomService.closeRoomsContent();
+    });
   };
 
 });
@@ -327,7 +411,7 @@ app.controller("chatCtrl", function($scope, $http, userService, roomService, cha
   };
 
   //Get information from services
-  //Watch userService
+  //Watch userService to catch user info
   $scope.user = [];
   $scope.$watch(function () {
     return userService.getUser();
