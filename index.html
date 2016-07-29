@@ -71,13 +71,13 @@
 					<!-- Info chat section -->
 					<div id="chat-talk" class="chat-talk {{ (tutsOpen == true ? 'hidden' : '') }}" >
 						<ul>
-							<li ng-repeat="x in chatTalk" class="{{ (user[0].user !== x.user ? 'room' : 'user') }}">
+							<li ng-repeat="x in chatTalk" class="{{ (user[0].user !== x.nick ? 'room' : 'user') }}">
 								<div class="chat-talk-info">
-									<span class="chat-user-name" alt="{{ x.user }}">{{ (x.user !== chatTalk[$index-1].user ? x.name : "") }}</span>
-									<br ng-if="x.user !== chatTalk[$index-1].user">
-									<span class="chat-user-text" ng-bind-html="textService.urlify(x.text)"></span>
-									<span class="fa fa-caret-{{ ((user[0].user !== x.user ? 'room' : 'user') == 'user' ? 'right' : 'left') }}
-									last-message {{ (user[0].user !== x.user ? 'room' : 'user') }}" ng-if="x.user !== chatTalk[$index+1].user"></span>
+									<span class="chat-user-name" alt="{{ x.nick }}">{{ (x.nick !== chatTalk[$index-1].nick ? x.nick : "") }}</span>
+									<br ng-if="x.nick !== chatTalk[$index-1].nick">
+									<span class="chat-user-text" ng-bind-html="textService.urlify(x.msg)"></span>
+									<span class="fa fa-caret-{{ ((user[0].user !== x.nick ? 'room' : 'user') == 'user' ? 'right' : 'left') }}
+									last-message {{ (user[0].user !== x.nick ? 'room' : 'user') }}" ng-if="x.nick !== chatTalk[$index+1].nick"></span>
 								</div>
 							</li>
 						</ul>
