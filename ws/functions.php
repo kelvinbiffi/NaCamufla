@@ -80,6 +80,7 @@ class functions{
 				}
 			}
 			$file['chat']['participants'][count($file['chat']['participants'])] = array("code"=>$participantCode,"nick"=>$participantNick, "owner"=>false);
+			$file['chat']['msg'][count($file['chat']['msg'])] = array('nick'=>"chatter-info-in-chat",'msg'=> $participantNick." entered in the room");
 			$this->deleteChat($chatId);
 			$a = fopen("../chat/".$chatId.".json","a");
 			$c = fwrite($a, json_encode($file));
@@ -149,8 +150,9 @@ class functions{
 	 * Remove the participant from the chat
 	 * @param $chatId
 	 * @param $participantCode
+	 * @param $participantNick
 	 */
-	function leaveChat($chatId, $participantCode){
+	function leaveChat($chatId, $participantCode, $participantNick){
 		$file = file_get_contents("../chat/".$chatId.".json");
 		if($file == false){
 			$file = array('error'=>'This chat does not exist');
@@ -161,6 +163,7 @@ class functions{
 			$this->deleteChat($chatId);
 			foreach($file['chat']['participants'] as $p){
 				if($p['code'] == $participantCode && $file['chat']['ownerLeaveDelChat']){
+					$file['chat']['msg'][count($file['chat']['msg'])] = array('nick'=>"chatter-info-in-chat",'msg'=> $participantNick." left the room");
 					if($p['owner']){
 						return;
 					}

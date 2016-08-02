@@ -26,7 +26,7 @@ if(isset($_REQUEST['action']) && isset($_REQUEST['chatId'])){
 		}
 		//Remove a participant from the chat
 		else if($_REQUEST['action'] == 'leaveChat'){
-			$f->leaveChat($_REQUEST['chatId'],$_REQUEST['participantCode']);
+			$f->leaveChat($_REQUEST['chatId'],$_REQUEST['participantCode'], $_REQUEST['participantNick']);
 		}
 	}
 //Generate a code that can be used as a participant id or chat id

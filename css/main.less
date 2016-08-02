@@ -1,5 +1,5 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,600");
-@import url("font-awesome.min.css");
+@import url("css/font-awesome.min.css");
 
 //mixins
 .calcWidth(@base, @lint) {
@@ -431,6 +431,20 @@ body{
                 text-align: left;
               }
   					}
+            &.info-in-chat{
+              text-align: center;
+              div{
+                span{
+                  &::before{
+                    content: "";
+                  }
+                }
+                .chat-user-text{
+                  font-size: 12px;
+                  white-space: nowrap;
+                }
+              }
+            }
   				}
   			}
   		}

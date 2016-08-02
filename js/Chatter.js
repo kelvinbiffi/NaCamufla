@@ -112,6 +112,7 @@ app.service('roomService', function($http, userService, chatService) {
       params: data
     }).then(function successCallback(obj) {
       chatService.setChatInfo({room: chatId, size: 0});
+      roomOpen = false;
       var n = $('#listRooms').height() * 100;
       $('#listRooms').animate({ scrollTop: n }, 1000);
     }, function errorCallback(data, status, headers, config) {
@@ -167,6 +168,7 @@ app.service('chatService', function($http, userService) {
   };
 
   var setChatInfo = function(newObj) {
+    localStorage.setItem("ChatterChatId", newObj.room);
     chatTalkInfo = newObj;
   };
   var getChatInfo = function(){
@@ -329,6 +331,8 @@ app.controller("userCtrl",function($scope, userService, roomService){
         $scope.user = $scope.name.replace(" ","").trim().toLowerCase();
         var d = new Date();
         $scope.code = code;
+        localStorage.setItem("ChatterUserCode", code);
+        localStorage.setItem("ChatterUserNick", $scope.user);
         $scope.useObj = [
           {code: $scope.code, user : $scope.user, name : $scope.name},
         ];
@@ -510,23 +514,6 @@ app.controller("chatCtrl", function($scope, $http, userService, roomService, cha
       },500);
       $scope.textArea = "";
     }
-  };
-
-  /**
-   * When the window was closed or reloaded remove the participant from the chat
-   */
-  window.onbeforeunload = function(){
-	  $http({
-      method: 'GET',
-      url: "ws/getJson.php?action=leaveChat&chatId=testeid1&participantCode="+$scope.user[0].code
-    }).then(function successCallback(result) {
-      console.log(result,'result close window');
-      $.each(result, function(i, returned){
-        console.log(i,returned,'returned close window');
-      });
-    }, function errorCallback(data, status, headers, config) {
-      console.log("error",data, status, headers, config);
-    });
   };
 
 });

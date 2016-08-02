@@ -1,5 +1,5 @@
 @import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,600");
-@import url("font-awesome.min.css");
+@import url("css/font-awesome.min.css");
 * {
   font-family: 'Source Sans Pro';
 }
@@ -383,6 +383,16 @@ body {
   padding-right: 25px;
   background: #b0e0e6;
   text-align: left;
+}
+.chat .content .chat .chat-talk ul li.info-in-chat {
+  text-align: center;
+}
+.chat .content .chat .chat-talk ul li.info-in-chat div span::before {
+  content: "";
+}
+.chat .content .chat .chat-talk ul li.info-in-chat div .chat-user-text {
+  font-size: 12px;
+  white-space: nowrap;
 }
 .chat .content .chat .text-area {
   width: 100%;
