@@ -89,6 +89,7 @@ app.service('roomService', function($http, userService, chatService) {
       console.log("Error enter in room",data, status, headers, config);
     });
   };
+
   /**
    * Create a new room
    *
@@ -350,6 +351,7 @@ app.controller("userCtrl",function($scope, userService, roomService){
 app.controller("roomsCtrl", function($scope, userService, roomService, chatService) {
 
   $scope.chatService = {};
+  $scope.createChatDisabled = false;
 
   //Watch chatInfo
   $scope.$watch(function () {
@@ -404,6 +406,11 @@ app.controller("roomsCtrl", function($scope, userService, roomService, chatServi
    * Call function from room service to create a new room
    */
   $scope.createNewRoom = function(){
+    $scope.createChatDisabled = true;
+    var enableCreateChat = setTimeout(function(){
+      $scope.createChatDisabled = false;
+      clearTimeout(enableCreateChat);
+    },15000);
     roomService.createNewRoom($scope.user);
   };
 

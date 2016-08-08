@@ -157,6 +157,9 @@ body {
   text-align: center;
   border-bottom: 1px solid #dfdfd9;
 }
+.chat .content .rooms ul li.new-chat.disabled {
+  opacity: 0.5;
+}
 .chat .content .rooms ul li.new-chat span {
   padding: 7px;
 }

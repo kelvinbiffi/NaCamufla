@@ -44,7 +44,7 @@
 						</li>
 					</ul>
 					<ul id="listRooms" class="listRooms">
-						<li class="new-chat" ng-click="createNewRoom()">
+						<li class="new-chat {{ (createChatDisabled == true ? 'disabled' : '') }}" ng-click="createChatDisabled || createNewRoom()">
 							<span class="fa fa-plus-circle"></span>
 						</li>
 						<li ng-repeat="x in rooms" class="room {{ (x.room == chatService.room ? 'selected' : '') }}" ng-click="loadChat(x)">

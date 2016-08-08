@@ -28,7 +28,7 @@ $(document).ready(function(){
       participantNick: userNick,
       chatId: chat
     };
-    console.log(params,'params');
+    
     $.ajax({
       type: 'GET',
       async: false,
