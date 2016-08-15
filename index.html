@@ -2,8 +2,8 @@
 <html ng-app="Chatter">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Chatter</title>
-
+		<title>NaCamufla</title>
+		<link rel="icon" href="favicon.ico">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="css/main.css">
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
@@ -25,7 +25,7 @@
 
 		<div ng-controller="userCtrl" class="welcome {{ control ? 'show' : ''}}">
 			<div class="content">
-				<span class="chatter">Chatter</span><br>
+				<span class="chatter">NaCamufla</span><br>
 				<input type="text" ng-keyup="keyEnter($event)"  ng-model="name" placeholder="Type your name"><br>
 				<span class="button" ng-click="setUser()">Enter</span>
 			</div>
