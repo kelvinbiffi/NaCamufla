@@ -116,7 +116,7 @@ app.service('roomService', function($http, userService, chatService) {
    */
   var createNewRoom = function(user){
     var timestamp = new Date().getTime();
-    var chatId = user[0].user + timestamp;
+    var chatId = user[0].code + timestamp;
     var url = "./ws/getJson.php";
     var data = {
       action: "createChat",
