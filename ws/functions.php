@@ -33,11 +33,16 @@ class functions{
 	}
 
 	/**
-	 * This function delete the chat archive where name equal $chatId.
-	 * @param $chatId
+	 * This function delete the chat archive where name have the $ownerId.
+	 * @param $ownerId
 	 */
-	function deleteChat($chatId){
-		unlink("../chat/".$chatId.".json");
+	function deleteChat($ownerId){
+		$chats = scandir("../chat");
+		foreach($chats as $c){
+			if(substr($c,0,11) == $ownerId){
+				unlink("../chat/".$c);
+			}
+		}
 	}
 
 	/**
@@ -159,14 +164,10 @@ class functions{
 		}else{
 			$file = json_decode($file,true);
 			$c = 0;
-			$participants = array();
-			$this->deleteChat($chatId);
+			$participants = array();			
 			foreach($file['chat']['participants'] as $p){
 				if($p['code'] == $participantCode && $file['chat']['ownerLeaveDelChat']){
 					$file['chat']['msg'][count($file['chat']['msg'])] = array('nick'=>"chatter-info-in-chat",'msg'=> $participantNick." left the room");
-					if($p['owner']){
-						return;
-					}
 				}else{
 					$participants[$c] = $p;
 				}
@@ -177,6 +178,7 @@ class functions{
 			$c = fwrite($a, json_encode($file));
 			fclose($a);
 		}
+		$this->deleteChat($participantCode);
 	}
 
 }
