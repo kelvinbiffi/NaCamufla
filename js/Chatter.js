@@ -45,6 +45,25 @@ app.service('userService', function($http) {
 });
 
 /**
+ * Service to send info about user cross controlers
+ */
+app.service('aboutService', function() {
+  var open = false;
+
+  var setOpen = function(info) {
+      open = info;
+  };
+  var getOpen = function(){
+      return open;
+  };
+
+  return {
+    setOpen: setOpen,
+    getOpen: getOpen
+  };
+});
+
+/**
  * Service to send info about rooms cross controlers
  */
 app.service('roomService', function($http, userService, chatService) {
@@ -345,10 +364,29 @@ app.controller("userCtrl",function($scope, userService, roomService){
 
 });
 
+app.controller("aboutCtrl",function($scope, aboutService){
+
+  $scope.open = false;
+  //Watch chatInfo
+  $scope.$watch(function () {
+    return aboutService.getOpen();
+  }, function(newOpenInfo, oldOpenInfo) {
+    $scope.open = newOpenInfo;
+  }, true);
+
+  /**
+   * Set user information
+   */
+  $scope.closeAbout = function(){
+    aboutService.setOpen(false);
+  };
+
+});
+
 /**
  * rooms API Controller
  */
-app.controller("roomsCtrl", function($scope, userService, roomService, chatService) {
+app.controller("roomsCtrl", function($scope, userService, roomService, chatService, aboutService) {
 
   $scope.chatService = {};
   $scope.createChatDisabled = false;
@@ -412,6 +450,13 @@ app.controller("roomsCtrl", function($scope, userService, roomService, chatServi
       clearTimeout(enableCreateChat);
     },15000);
     roomService.createNewRoom($scope.user);
+  };
+
+  /**
+   * Open about
+   */
+  $scope.openAbout = function(){
+    aboutService.setOpen(true);
   };
 
   /**

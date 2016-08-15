@@ -31,6 +31,18 @@
 			</div>
 		</div>
 
+		<div ng-controller="aboutCtrl" class="about-content {{ open ? 'show' : ''}}" ng-click="closeAbout()">
+			<div class="content">
+				<h1>About</h1><br>
+				<h2>Developed by:</h2>
+				<span>- <a href="http://kelvinbiffi.github.io/" target="_blank">Kelvin Biffi</a> Front-end</span><br>
+				<span>- <a href="http://wesleyosorio.xyz/" target="_blank">Wesley Osorio</a> Back-end</span><br>
+				<br>
+				<h2>GITHUB</h2>
+				<span>- <a href="https://github.com/kelvinbiffi/NaCamufla" target="_blank">NaCamufla</a></span>
+			</div>
+		</div>
+
 		<div class="chat">
 			<div class="content">
 				<!-- Contact section -->
@@ -44,6 +56,9 @@
 						</li>
 					</ul>
 					<ul id="listRooms" class="listRooms">
+						<li class="about" ng-click="openAbout()">
+							<span>ABOUT</span><br>
+						</li>
 						<li class="new-chat {{ (createChatDisabled == true ? 'disabled' : '') }}" ng-click="createChatDisabled || createNewRoom()">
 							<span class="fa fa-plus-circle"></span>
 						</li>
