@@ -96,7 +96,7 @@
 					<!-- Info chat section -->
 					<div id="chat-talk" class="chat-talk {{ (tutsOpen == true ? 'hidden' : '') }}" >
 						<ul>
-							<li ng-repeat="x in chatTalk" class="{{ (user[0].user !== x.nick ? 'room' : 'user') }} {{ (x.nick == 'chatter-info-in-chat' ? 'info-in-chat' : '') }}">
+							<li ng-repeat="x in chatTalk track by $index" class="{{ (user[0].user !== x.nick ? 'room' : 'user') }} {{ (x.nick == 'chatter-info-in-chat' ? 'info-in-chat' : '') }}">
 								<div class="chat-talk-info">
 									<span ng-if="x.nick !== 'chatter-info-in-chat'" class="chat-user-name" alt="{{ x.nick }}">{{ (x.nick !== chatTalk[$index-1].nick ? x.nick : "") }}</span>
 									<br ng-if="x.nick !== chatTalk[$index-1].nick && x.nick !== 'chatter-info-in-chat'">
