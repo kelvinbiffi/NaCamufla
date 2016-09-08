@@ -82,8 +82,18 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 999;
+  z-index: 9999;
   background: #FFFFFF;
+}
+.about-content .close {
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  z-index: 9999;
+  font-size: 34px;
+  padding: 5px;
+  right: 0;
+  top: 0;
 }
 .about-content.show {
   display: block;
