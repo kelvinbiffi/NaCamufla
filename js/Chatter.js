@@ -180,6 +180,11 @@ app.service('chatService', function($http, userService) {
     $('#chat-talk').animate({ scrollTop: n }, time);
   };
 
+  var notifyMessage = function(){
+    $('embed').remove();
+    $('body').append('<embed src="../sounds/you-wouldnt-believe.ogg" autostart="true" hidden="true" loop="false">');
+  };
+
   var setChatTalk = function(newObj) {
     chatTalk = newObj;
   };
@@ -235,6 +240,7 @@ app.service('chatService', function($http, userService) {
       params: data
     }).then(function successCallback(obj) {
       chatTalk = obj.data;
+      notifyMessage();
       //Slide down chat content
       var controlScrollDown = setTimeout(function(){
         scrollDown(1000);
