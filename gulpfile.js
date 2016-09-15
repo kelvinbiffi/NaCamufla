@@ -59,6 +59,12 @@ gulp.task('pubWS', function(arch){
 	.pipe(util.noop());
 });
 
+//Publish Images Files
+gulp.task('pubSounds', function(arch){
+	return gulp.src((arch === undefined ? 'sounds/*' : 'sounds/'+arch))
+	.pipe(ftp(configFTP('sounds')))
+	.pipe(util.noop());
+});
 gulp.task('deb', function(tt){
 	console.log(tt);
 });
@@ -92,7 +98,7 @@ gulp.task('pubHTML', function(){
 });
 
 //Publish All Source Files
-gulp.task('publish', ['pubImg','pubCSS','pubJS','pubDep','pubHTML'], function(){
+gulp.task('publish', ['pubImg','pubCSS','pubJS','pubDep','pubHTML', 'pubSounds'], function(){
 	return gulp.src('*')
 	.pipe(ftp(configFTP('')))
 	.pipe(util.noop());
