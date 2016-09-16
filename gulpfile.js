@@ -98,7 +98,7 @@ gulp.task('pubHTML', function(){
 });
 
 //Publish All Source Files
-gulp.task('publish', ['pubImg','pubCSS','pubJS','pubDep','pubHTML', 'pubSounds'], function(){
+gulp.task('publish', ['pubImg','pubCSS','pubJS','pubWS','pubHTML', 'pubSounds'], function(){
 	return gulp.src('*')
 	.pipe(ftp(configFTP('')))
 	.pipe(util.noop());
